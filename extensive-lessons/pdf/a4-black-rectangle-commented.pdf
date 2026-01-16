@@ -1,0 +1,68 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+/Kids [3 0 R]
+/Count 1
+>>
+endobj
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+% DIFFERENCE: MediaBox changed from [0 0 612 792] to [0 0 595 842]
+% [0 0 612 792] = US Letter size (8.5 x 11 inches)
+% [0 0 595 842] = A4 size (210 x 297 mm or 8.27 x 11.69 inches)
+/MediaBox [0 0 595 842]
+/Contents 4 0 R
+% DIFFERENCE: No Font resource needed since we're drawing graphics, not text
+/Resources <<
+>>
+>>
+endobj
+4 0 obj
+<<
+/Length 44
+% DIFFERENCE: Length is 44 bytes (same as hello-world, but different content)
+>>
+stream
+% DIFFERENCE: Content stream completely different - using graphics operators instead of text
+% Graphics operators for drawing a black rectangle:
+0 g
+% Set grayscale color to 0 (black) - g operator sets non-stroking color
+0 742 m
+% Move to point (0, 742) - m = moveto (bottom-left corner of rectangle)
+595 742 l
+% Line to (595, 742) - l = lineto (bottom-right corner)
+595 842 l
+% Line to (595, 842) - l = lineto (top-right corner)
+0 842 l
+% Line to (0, 842) - l = lineto (top-left corner)
+f
+% Fill the path - f = fill (fills the rectangle with the current color)
+% This creates a black rectangle from y=742 to y=842 (100 points tall at the top)
+endstream
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000048 00000 n 
+0000000107 00000 n 
+0000000280 00000 n 
+trailer
+<<
+% DIFFERENCE: Size changed from 6 to 5 (one less object - no font object needed)
+/Size 5
+/Root 1 0 R
+>>
+startxref
+380
+%%EOF
+

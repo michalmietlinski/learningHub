@@ -1,0 +1,136 @@
+%PDF-1.4
+1 0 obj
+<<
+/Type /Catalog
+/Pages 2 0 R
+>>
+endobj
+2 0 obj
+<<
+/Type /Pages
+% DIFFERENCE: Kids array now contains multiple page references
+% [3 0 R 4 0 R 5 0 R] = references to objects 3, 4, and 5 (three pages)
+/Kids [3 0 R 4 0 R 5 0 R]
+% DIFFERENCE: Count changed from 1 to 3 (number of pages)
+/Count 3
+>>
+endobj
+3 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 595 842]
+/Contents 6 0 R
+% DIFFERENCE: Each page has its own Contents object
+% Page 1 uses Contents object 6
+/Resources <<
+/Font <<
+/F1 9 0 R
+% All pages can share the same font resource (object 9)
+>>
+>>
+>>
+endobj
+4 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 595 842]
+/Contents 7 0 R
+% DIFFERENCE: Page 2 uses Contents object 7 (different from page 1)
+/Resources <<
+/Font <<
+/F1 9 0 R
+% Same font resource as page 1
+>>
+>>
+>>
+endobj
+5 0 obj
+<<
+/Type /Page
+/Parent 2 0 R
+/MediaBox [0 0 595 842]
+/Contents 8 0 R
+% DIFFERENCE: Page 3 uses Contents object 8 (different from pages 1 and 2)
+/Resources <<
+/Font <<
+/F1 9 0 R
+% Same font resource as other pages
+>>
+>>
+>>
+endobj
+6 0 obj
+<<
+/Length 50
+% Content stream for Page 1
+>>
+stream
+BT
+/F1 36 Tf
+200 400 Td
+(Page 1) Tj
+ET
+endstream
+endobj
+7 0 obj
+<<
+/Length 50
+% Content stream for Page 2
+% DIFFERENCE: Each page has its own content stream object
+>>
+stream
+BT
+/F1 36 Tf
+200 400 Td
+(Page 2) Tj
+ET
+endstream
+endobj
+8 0 obj
+<<
+/Length 50
+% Content stream for Page 3
+>>
+stream
+BT
+/F1 36 Tf
+200 400 Td
+(Page 3) Tj
+ET
+endstream
+endobj
+9 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/BaseFont /Helvetica
+% DIFFERENCE: Font object is shared across all pages
+% Only one font definition needed for all pages
+>>
+endobj
+xref
+0 10
+% DIFFERENCE: More objects in xref table (10 objects instead of 6)
+% Objects: 0 (free), 1 (Catalog), 2 (Pages), 3-5 (Page objects), 6-8 (Contents), 9 (Font)
+0000000000 65535 f 
+0000000009 00000 n 
+0000000048 00000 n 
+0000000107 00000 n 
+0000000170 00000 n 
+0000000233 00000 n 
+0000000296 00000 n 
+0000000359 00000 n 
+0000000422 00000 n 
+0000000485 00000 n 
+trailer
+<<
+% DIFFERENCE: Size changed from 6 to 10 (more objects for multiple pages)
+/Size 10
+/Root 1 0 R
+>>
+startxref
+548
+%%EOF
+
