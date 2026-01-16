@@ -1,0 +1,118 @@
+%PDF-1.4
+% This is the PDF version header - PDF-1.4 is a common version
+% The % symbol is used for comments in PDF files
+% PDF files are structured with objects, cross-reference tables, and trailers
+
+1 0 obj
+% Object 1: Catalog - the root of the document structure
+<<
+/Type /Catalog
+% Type defines this as a Catalog object
+/Pages 2 0 R
+% Pages points to object 2, which contains the page tree
+>>
+endobj
+% End of object 1
+
+2 0 obj
+% Object 2: Pages - contains information about all pages
+<<
+/Type /Pages
+% Type defines this as a Pages object
+/Kids [3 0 R]
+% Kids array contains references to page objects (object 3)
+/Count 1
+% Count is the number of pages in this document (1 page)
+>>
+endobj
+% End of object 2
+
+3 0 obj
+% Object 3: Page - defines a single page
+<<
+/Type /Page
+% Type defines this as a Page object
+/Parent 2 0 R
+% Parent points back to the Pages object (object 2)
+/MediaBox [0 0 612 792]
+% MediaBox defines page size: [left bottom right top] in points
+% 612x792 points = 8.5x11 inches (US Letter size)
+/Contents 4 0 R
+% Contents points to object 4, which contains the actual page content
+/Resources <<
+/Font <<
+/F1 5 0 R
+% F1 is a font resource pointing to object 5
+>>
+>>
+% Resources define fonts, images, etc. used on this page
+>>
+endobj
+% End of object 3
+
+4 0 obj
+% Object 4: Content stream - the actual text and graphics on the page
+<<
+/Length 44
+% Length is the number of bytes in the content stream
+>>
+stream
+% Start of content stream
+BT
+% Begin Text - starts a text object
+/F1 24 Tf
+% Set font F1 at size 24 points (Tf = Text font)
+100 700 Td
+% Move text position to coordinates (100, 700) - Td = Text position
+(Hello, World!) Tj
+% Show the text "Hello, World!" - Tj = Show text
+ET
+% End Text - ends the text object
+endstream
+endobj
+% End of object 4
+
+5 0 obj
+% Object 5: Font - defines the font to use
+<<
+/Type /Font
+% Type defines this as a Font object
+/Subtype /Type1
+% Subtype is Type1 (standard PostScript font)
+/BaseFont /Helvetica
+% BaseFont specifies Helvetica font
+>>
+endobj
+% End of object 5
+
+xref
+% Cross-reference table - lists byte offsets of all objects
+% Format: first object number, count of objects
+0 6
+% Object 0 (free object) at offset 0
+0000000000 65535 f 
+% Object 1 starts at byte offset (we'll calculate this)
+0000000009 00000 n 
+% Object 2 starts at byte offset
+0000000048 00000 n 
+% Object 3 starts at byte offset
+0000000107 00000 n 
+% Object 4 starts at byte offset
+0000000196 00000 n 
+% Object 5 starts at byte offset
+0000000289 00000 n 
+
+trailer
+% Trailer - contains document metadata and pointers
+<<
+/Size 6
+% Size is the number of objects (including free object 0)
+/Root 1 0 R
+% Root points to the Catalog object (object 1)
+>>
+startxref
+% Start of cross-reference table offset
+338
+% Byte offset where xref table starts
+%%EOF
+% End of file marker - PDF files must end with %%EOF
