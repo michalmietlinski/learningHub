@@ -903,6 +903,415 @@ import { UserController } from '../Presentation/UserController';
 
 ---
 
+## 🔄 Dependency Inversion in Layered Architecture
+
+### Understanding the Relationship
+
+**Important Note:** Layered Architecture and Dependency Inversion Principle (DIP) are not contradictory - they work together. Layered Architecture defines the **structural organization** (which layers exist), while DIP defines **how layers should depend on each other** (through abstractions, not concretions).
+
+**Key Insight:**
+- **Layered Architecture** = What layers exist (Presentation, Business, Data)
+- **Dependency Inversion** = How layers depend on each other (through interfaces)
+
+### Traditional Layered Architecture (Without DIP)
+
+**Problem:** Layers depend directly on concrete implementations, creating tight coupling.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              Presentation Layer                          │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │  UserController                                  │  │
+│  │  ↓ depends on concrete class                    │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │              Business Layer                       │  │
+│  │  ┌────────────────────────────────────────────┐ │  │
+│  │  │  UserService (concrete)                    │ │  │
+│  │  │  ↓ depends on concrete class                │ │  │
+│  │  └────────────────────────────────────────────┘ │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │              Data Layer                           │  │
+│  │  ┌────────────────────────────────────────────┐ │  │
+│  │  │  UserRepository (concrete)                  │ │  │
+│  │  │  ↓ depends on concrete class                 │ │  │
+│  │  └────────────────────────────────────────────┘ │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│              PostgreSQLDatabase (concrete)                │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Issues:**
+- ❌ Tight coupling between layers
+- ❌ Hard to test (can't mock dependencies)
+- ❌ Hard to swap implementations
+- ❌ Changes cascade through layers
+- ❌ Violates Dependency Inversion Principle
+
+**Example Code (Without DIP):**
+
+```typescript
+// ❌ Data Layer - Concrete implementation
+// Data/Repositories/UserRepository.ts
+import { Pool } from 'pg'; // Direct dependency on PostgreSQL
+
+export class UserRepository {
+  private db: Pool;
+
+  constructor() {
+    // ❌ Direct instantiation, hard-coded to PostgreSQL
+    this.db = new Pool({ connectionString: process.env.DATABASE_URL });
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const result = await this.db.query('SELECT * FROM users WHERE id = $1', [id]);
+    return result.rows[0] || null;
+  }
+}
+
+// ❌ Business Layer - Depends on concrete Data class
+// Business/Services/UserService.ts
+import { UserRepository } from '../Data/Repositories/UserRepository'; // ❌ Concrete dependency
+
+export class UserService {
+  private userRepository: UserRepository;
+
+  constructor() {
+    // ❌ Direct instantiation, tight coupling
+    this.userRepository = new UserRepository();
+  }
+
+  async getUserById(id: string): Promise<User> {
+    return await this.userRepository.findById(id);
+  }
+}
+
+// ❌ Presentation Layer - Depends on concrete Business class
+// Presentation/Controllers/UserController.ts
+import { UserService } from '../Business/Services/UserService'; // ❌ Concrete dependency
+
+export class UserController {
+  private userService: UserService;
+
+  constructor() {
+    // ❌ Direct instantiation, tight coupling
+    this.userService = new UserService();
+  }
+
+  async getUser(req: Request, res: Response): Promise<void> {
+    const user = await this.userService.getUserById(req.params.id);
+    res.json(user);
+  }
+}
+```
+
+**Problems with this approach:**
+1. **Can't test in isolation** - Need real database for tests
+2. **Can't swap implementations** - Hard-coded to PostgreSQL
+3. **Tight coupling** - Changes in one layer affect others
+4. **Violates DIP** - High-level depends on low-level concretions
+
+### Layered Architecture with DIP
+
+**Solution:** Layers depend on abstractions (interfaces), not concrete implementations.
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              Presentation Layer                          │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │  UserController                                  │  │
+│  │  ↓ depends on interface                          │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│              ┌──────────────────┐                        │
+│              │  IUserService    │  ← Abstraction         │
+│              │  (Interface)     │                        │
+│              └──────────────────┘                        │
+│                        ▲                                 │
+│                        │ implements                      │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │              Business Layer                       │  │
+│  │  ┌────────────────────────────────────────────┐ │  │
+│  │  │  UserService (implements IUserService)    │ │  │
+│  │  │  ↓ depends on interface                    │ │  │
+│  │  └────────────────────────────────────────────┘ │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│              ┌──────────────────┐                        │
+│              │  IUserRepository │  ← Abstraction         │
+│              │  (Interface)     │                        │
+│              └──────────────────┘                        │
+│                        ▲                                 │
+│                        │ implements                      │
+│  ┌──────────────────────────────────────────────────┐  │
+│  │              Data Layer                           │  │
+│  │  ┌────────────────────────────────────────────┐ │  │
+│  │  │  UserRepository (implements IUserRepository)│ │  │
+│  │  │  ↓ depends on interface                    │ │  │
+│  │  └────────────────────────────────────────────┘ │  │
+│  └──────────────────────────────────────────────────┘  │
+│                        │                                 │
+│                        ▼                                 │
+│              ┌──────────────────┐                        │
+│              │  IDatabase       │  ← Abstraction         │
+│              │  (Interface)     │                        │
+│              └──────────────────┘                        │
+│                        ▲                                 │
+│                        │ implements                      │
+│        PostgreSQLDatabase / MongoDBDatabase             │
+└─────────────────────────────────────────────────────────┘
+```
+
+**Benefits:**
+- ✅ Loose coupling between layers
+- ✅ Easy to test (can inject mocks)
+- ✅ Easy to swap implementations
+- ✅ Changes are isolated
+- ✅ Follows Dependency Inversion Principle
+
+**Example Code (With DIP):**
+
+```typescript
+// ✅ Step 1: Define interfaces (abstractions)
+// Business/Interfaces/IUserRepository.ts
+export interface IUserRepository {
+  findById(id: string): Promise<User | null>;
+  findByEmail(email: string): Promise<User | null>;
+  save(user: User): Promise<void>;
+  delete(id: string): Promise<void>;
+}
+
+// Business/Interfaces/IUserService.ts
+export interface IUserService {
+  getUserById(id: string): Promise<User>;
+  createUser(data: CreateUserRequest): Promise<User>;
+  updateUser(id: string, data: UpdateUserRequest): Promise<User>;
+}
+
+// ✅ Step 2: Data Layer implements interface
+// Data/Repositories/UserRepository.ts
+import { IUserRepository } from '../../Business/Interfaces/IUserRepository';
+import { IDatabase } from '../Interfaces/IDatabase'; // Depends on abstraction
+
+export class UserRepository implements IUserRepository {
+  constructor(private db: IDatabase) {} // ✅ Dependency injection, depends on interface
+
+  async findById(id: string): Promise<User | null> {
+    const result = await this.db.query('SELECT * FROM users WHERE id = $1', [id]);
+    return result.rows[0] || null;
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    const result = await this.db.query('SELECT * FROM users WHERE email = $1', [email]);
+    return result.rows[0] || null;
+  }
+
+  async save(user: User): Promise<void> {
+    await this.db.query(
+      'INSERT INTO users (id, email, name) VALUES ($1, $2, $3)',
+      [user.id, user.email, user.name]
+    );
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.db.query('DELETE FROM users WHERE id = $1', [id]);
+  }
+}
+
+// ✅ Step 3: Business Layer depends on interface
+// Business/Services/UserService.ts
+import { IUserService } from './Interfaces/IUserService';
+import { IUserRepository } from './Interfaces/IUserRepository'; // ✅ Depends on interface
+
+export class UserService implements IUserService {
+  constructor(private userRepository: IUserRepository) {} // ✅ Dependency injection
+
+  async getUserById(id: string): Promise<User> {
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  }
+
+  async createUser(data: CreateUserRequest): Promise<User> {
+    // Business logic
+    const existingUser = await this.userRepository.findByEmail(data.email);
+    if (existingUser) {
+      throw new Error('User with this email already exists');
+    }
+
+    const user = new User(data.email, data.name);
+    await this.userRepository.save(user);
+    return user;
+  }
+
+  async updateUser(id: string, data: UpdateUserRequest): Promise<User> {
+    const user = await this.userRepository.findById(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    // Business logic
+    if (data.email) {
+      user.updateEmail(data.email);
+    }
+    if (data.name) {
+      user.updateName(data.name);
+    }
+
+    await this.userRepository.save(user);
+    return user;
+  }
+}
+
+// ✅ Step 4: Presentation Layer depends on interface
+// Presentation/Controllers/UserController.ts
+import { IUserService } from '../../Business/Interfaces/IUserService'; // ✅ Depends on interface
+
+export class UserController {
+  constructor(private userService: IUserService) {} // ✅ Dependency injection
+
+  async getUser(req: Request, res: Response): Promise<void> {
+    try {
+      const user = await this.userService.getUserById(req.params.id);
+      res.json(user);
+    } catch (error) {
+      res.status(404).json({ error: 'User not found' });
+    }
+  }
+
+  async createUser(req: Request, res: Response): Promise<void> {
+    try {
+      const request = new CreateUserRequest(req.body.email, req.body.name);
+      const user = await this.userService.createUser(request);
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Error' });
+    }
+  }
+}
+
+// ✅ Step 5: Composition Root - Wire everything together
+// Presentation/App.ts
+import { UserController } from './Controllers/UserController';
+import { UserService } from '../Business/Services/UserService';
+import { UserRepository } from '../Data/Repositories/UserRepository';
+import { PostgreSQLDatabase } from '../Data/Database/PostgreSQLDatabase';
+
+// Create instances (dependency injection)
+const database = new PostgreSQLDatabase(process.env.DATABASE_URL!);
+const userRepository = new UserRepository(database);
+const userService = new UserService(userRepository);
+const userController = new UserController(userService);
+
+// Now we can easily swap implementations:
+// const mongoDatabase = new MongoDBDatabase(process.env.MONGO_URL!);
+// const userRepository = new UserRepository(mongoDatabase); // Same interface!
+```
+
+### Key Differences
+
+| Aspect | Without DIP | With DIP |
+|--------|------------|----------|
+| **Dependencies** | Concrete classes | Interfaces/Abstractions |
+| **Coupling** | Tight coupling | Loose coupling |
+| **Testability** | Hard to test (need real DB) | Easy to test (can mock) |
+| **Flexibility** | Hard to swap implementations | Easy to swap implementations |
+| **Dependency Injection** | Direct instantiation | Constructor injection |
+| **Violates DIP?** | ❌ Yes | ✅ No |
+
+### Testing Benefits with DIP
+
+```typescript
+// ✅ Easy to test with mocks
+describe('UserService', () => {
+  it('should get user by id', async () => {
+    // Create mock repository
+    const mockRepository: IUserRepository = {
+      findById: jest.fn().mockResolvedValue({ id: '1', email: 'test@example.com', name: 'Test' }),
+      findByEmail: jest.fn(),
+      save: jest.fn(),
+      delete: jest.fn()
+    };
+
+    // Inject mock
+    const userService = new UserService(mockRepository);
+
+    // Test
+    const user = await userService.getUserById('1');
+
+    expect(user).toBeDefined();
+    expect(mockRepository.findById).toHaveBeenCalledWith('1');
+  });
+});
+
+// ✅ Easy to test controller
+describe('UserController', () => {
+  it('should get user', async () => {
+    // Create mock service
+    const mockService: IUserService = {
+      getUserById: jest.fn().mockResolvedValue({ id: '1', email: 'test@example.com' }),
+      createUser: jest.fn(),
+      updateUser: jest.fn()
+    };
+
+    // Inject mock
+    const controller = new UserController(mockService);
+
+    // Test
+    const req = { params: { id: '1' } } as any;
+    const res = { json: jest.fn() } as any;
+
+    await controller.getUser(req, res);
+
+    expect(mockService.getUserById).toHaveBeenCalledWith('1');
+    expect(res.json).toHaveBeenCalled();
+  });
+});
+```
+
+### Best Practices for Applying DIP in Layered Architecture
+
+✅ **Do:**
+- Define interfaces in the layer that uses them (or in a shared interfaces layer)
+- Use dependency injection for all layer dependencies
+- Program to interfaces, not implementations
+- Keep interfaces stable and focused
+- Use composition root to wire dependencies
+
+❌ **Don't:**
+- Depend on concrete classes across layers
+- Use direct instantiation (`new Class()`) for dependencies
+- Create interfaces that are too broad
+- Skip dependency injection
+- Mix abstraction levels in interfaces
+
+### Summary
+
+**Layered Architecture + DIP = Best of Both Worlds**
+
+- **Layered Architecture** provides clear structural organization
+- **Dependency Inversion** provides loose coupling and flexibility
+- **Together** they create maintainable, testable, and flexible systems
+
+**Remember:**
+- Layers still exist (Presentation, Business, Data)
+- Dependencies still flow downward structurally
+- But dependencies are through **interfaces**, not concrete classes
+- This gives you the organization of Layered Architecture with the flexibility of DIP
+
+---
+
 ## 🔀 Layered Architecture vs Other Patterns
 
 ### Layered Architecture vs Clean Architecture
