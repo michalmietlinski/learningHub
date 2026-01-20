@@ -132,7 +132,8 @@
 - Handle user input
 - Display data to users
 - Format data for presentation
-- Validate input format (not business rules)
+- ⚠️ Note: Input format validation is better placed in Business Layer for reusability
+- See: [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) for validation best practices (principles apply to layered architecture)
 - Route requests to business layer
 
 **Characteristics:**
@@ -1520,6 +1521,9 @@ After mastering Layered Architecture, consider:
 - MVC (Model-View-Controller)
 - MVVM (Model-View-ViewModel)
 - N-Tier Architecture
+
+**Related Topics:**
+- [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) - **Essential guide** on validation placement in layered architectures (principles apply to traditional layered architecture)
 
 **Implementation Examples:**
 - Spring Framework (Java) - Built-in layered structure

@@ -557,6 +557,8 @@ export class UserController {
         password: req.body.password
       };
 
+      // ⚠️ Note: In practice, validation should be in Application layer, not Presentation
+      // See: [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md)
       // Validate input format (not business rules)
       if (!request.email || !request.name || !request.birthDate || !request.password) {
         res.status(400).json({ error: 'Missing required fields' });
@@ -931,7 +933,8 @@ export class CreateUserService {
 // ✅ Domain logic in domain entity
 export class CreateUserService {
   async execute(request: CreateUserRequest): Promise<void> {
-    // ✅ Domain handles validation
+    // ✅ Domain handles validation (business rules)
+    // See: [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) for detailed validation placement
     const user = User.create(/* ... */); // Domain validates age
     await this.userRepository.save(user);
   }
@@ -1200,6 +1203,9 @@ After mastering Onion Architecture, consider:
 - Hexagonal Architecture (Ports & Adapters)
 - Domain-Driven Design (Eric Evans)
 - Dependency Inversion Principle (SOLID)
+
+**Related Topics:**
+- [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) - **Essential guide** on where to place validation in each layer
 
 **Books:**
 - "Domain-Driven Design" by Eric Evans

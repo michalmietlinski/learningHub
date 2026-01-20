@@ -341,7 +341,8 @@ export interface EmailService {
 **A. Controllers (Input Adapters)**
 - Convert HTTP requests to use case inputs
 - Handle routing and request parsing
-- Validate input format
+- ⚠️ Note: Input format validation typically belongs in Use Cases layer, not Controllers
+- See: [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) for best practices
 - Call use cases
 
 **B. Presenters (Output Adapters)**
@@ -2182,6 +2183,9 @@ After mastering Clean Architecture, consider:
 - Onion Architecture
 - Dependency Inversion Principle (SOLID)
 - Domain-Driven Design
+
+**Related Topics:**
+- [Validation in Onion Architecture](./2026-01-20-validation-in-onion-architecture.md) - **Essential guide** on validation placement (applies to Clean Architecture as well)
 
 **Implementation Examples:**
 - Spring Boot (Java) - Built-in support

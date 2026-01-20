@@ -390,7 +390,9 @@ export class CreateUserService {
       request.password
     );
 
-    // ✅ Check uniqueness (could be in domain service)
+    // ✅ Check uniqueness (business rule - could be in domain service)
+    // Note: Uniqueness checks often require infrastructure (database queries)
+    // Consider using a Domain Service for complex business rules that need infrastructure
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
       throw new DomainError('Email already exists');
@@ -551,13 +553,43 @@ export class CreateUserService {
 
 ---
 
+## 🔧 Error Types
+
+### ValidationError vs DomainError
+
+**ValidationError:**
+- Used for input format validation (syntactic)
+- Thrown in Application layer
+- Indicates user input problems
+- Examples: "Email is required", "Invalid date format"
+
+**DomainError:**
+- Used for business rule validation (semantic)
+- Thrown in Domain layer
+- Indicates business rule violations
+- Examples: "User must be at least 18 years old", "Email already exists"
+
+**Example:**
+```typescript
+// Application Layer
+if (!request.email?.trim()) {
+  throw new ValidationError('Email is required'); // Input format issue
+}
+
+// Domain Layer
+if (age < 18) {
+  throw new DomainError('User must be at least 18 years old'); // Business rule
+}
+```
+
 ## 📝 Key Takeaways
 
 1. **Presentation Layer**: NO validation - only HTTP concerns
-2. **Application Layer**: Input format validation (syntactic)
-3. **Domain Layer**: Business rules validation (semantic)
+2. **Application Layer**: Input format validation (syntactic) - throws `ValidationError`
+3. **Domain Layer**: Business rules validation (semantic) - throws `DomainError`
 4. **Value Objects**: Self-validating, enforce invariants
 5. **Reusability**: Validation in Application/Domain layers can be reused across all entry points
+6. **Error Types**: Use `ValidationError` for input issues, `DomainError` for business rules
 
 ---
 
