@@ -32,7 +32,7 @@
 - **Scalability** - Read and write sides can scale independently
 - **Complexity Management** - Simplifies complex domain models
 
-**Key Principle:**
+**Core Principle:**
 > "CQRS separates the read and write operations of a data store. Commands (writes) and Queries (reads) use different models and can be optimized, scaled, and maintained independently. This separation is particularly valuable when read and write workloads have different requirements." - Greg Young
 
 **Alternative Formulation:**
