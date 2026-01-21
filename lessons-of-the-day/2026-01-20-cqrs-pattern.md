@@ -32,7 +32,7 @@
 - **Scalability** - Read and write sides can scale independently
 - **Complexity Management** - Simplifies complex domain models
 
-**Core Principle:**
+**Key Principle:**
 > "CQRS separates the read and write operations of a data store. Commands (writes) and Queries (reads) use different models and can be optimized, scaled, and maintained independently. This separation is particularly valuable when read and write workloads have different requirements." - Greg Young
 
 **Alternative Formulation:**
@@ -1263,10 +1263,11 @@ async handle(query: GetUserQuery): Promise<UserReadModel> {
 ### Next Steps
 
 After mastering CQRS, consider:
-- **Event Sourcing** - Store events instead of state
+- **Projections** - Transform events into read models ([2026-01-21-projections.md](./2026-01-21-projections.md))
+- **Event Sourcing** - Store events instead of state ([2026-01-21-event-sourcing.md](./2026-01-21-event-sourcing.md))
+- **Event-Driven Architecture** - Full event-driven system ([2026-01-27-event-driven-architecture.md](./2026-01-27-event-driven-architecture.md))
 - **Domain-Driven Design** - Rich domain models
 - **Microservices** - Apply CQRS to services
-- **Event-Driven Architecture** - Full event-driven system
 
 ---
 
@@ -1278,9 +1279,10 @@ After mastering CQRS, consider:
 - Bertrand Meyer - Command Query Separation (CQS)
 
 **Related Patterns:**
-- Event Sourcing
+- [Projections](./2026-01-21-projections.md) - Transform events into read models
+- [Event Sourcing](./2026-01-21-event-sourcing.md) - Store events as source of truth
+- [Event-Driven Architecture](./2026-01-27-event-driven-architecture.md) - Event-based communication
 - Domain-Driven Design
-- Event-Driven Architecture
 - Microservices
 
 **Books:**

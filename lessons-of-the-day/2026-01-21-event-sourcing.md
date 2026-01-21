@@ -1266,9 +1266,10 @@ async rebuild(events: DomainEvent[]): Promise<void> {
 ### Next Steps
 
 After mastering Event Sourcing, consider:
-- **CQRS** - Combine with Event Sourcing
+- **Projections** - Transform events into read models ([2026-01-21-projections.md](./2026-01-21-projections.md))
+- **CQRS** - Combine with Event Sourcing ([2026-01-20-cqrs-pattern.md](./2026-01-20-cqrs-pattern.md))
+- **Event-Driven Architecture** - Full event-driven system ([2026-01-27-event-driven-architecture.md](./2026-01-27-event-driven-architecture.md))
 - **Domain-Driven Design** - Rich domain models
-- **Event-Driven Architecture** - Full event-driven system
 - **Microservices** - Apply Event Sourcing to services
 
 ---
@@ -1281,8 +1282,9 @@ After mastering Event Sourcing, consider:
 - Domain-Driven Design community
 
 **Related Patterns:**
-- CQRS (Command Query Responsibility Segregation)
-- Event-Driven Architecture
+- [Projections](./2026-01-21-projections.md) - Transform events into read models
+- [CQRS](./2026-01-20-cqrs-pattern.md) (Command Query Responsibility Segregation)
+- [Event-Driven Architecture](./2026-01-27-event-driven-architecture.md) - Event-based communication
 - Domain-Driven Design
 - Microservices
 
