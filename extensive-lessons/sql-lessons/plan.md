@@ -1153,7 +1153,7 @@ When creating each lesson, follow these guidelines:
 ## ✅ Progress Tracking
 
 - [x] Lesson 1: Introduction to SQL and Databases
-- [ ] Lesson 2: Setting Up Your SQL Environment
+- [x] Lesson 2: Setting Up Your SQL Environment
 - [ ] Lesson 3: Understanding Tables and Data Types
 - [ ] Lesson 4: Creating Your First Table
 - [ ] Lesson 5: SELECT - Retrieving Data
