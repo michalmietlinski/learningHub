@@ -60,9 +60,11 @@ Before you start writing SQL, you need a database to work with. Here are your op
 
 1. Visit: https://www.sqlite.org/download.html
 2. Download the **Precompiled Binaries** for your operating system:
-   - **Windows**: `sqlite-tools-win-x64-*.zip`
+   - **Windows**: `sqlite-tools-win-x64-*.zip` ⚠️ **Important**: Download the "tools" package, NOT the "dll" package
    - **Mac**: `sqlite-tools-osx-x64-*.zip`
    - **Linux**: `sqlite-tools-linux-x64-*.zip`
+
+**⚠️ Common Mistake:** The `sqlite-dll-win-*.zip` file only contains the DLL library file, not the command-line tool. You need `sqlite-tools-win-*.zip` which contains `sqlite3.exe`.
 
 ### Step 2: Install SQLite
 
@@ -93,6 +95,18 @@ sqlite3 my_first_database.db
 
 This creates a new database file called `my_first_database.db` and opens the SQLite command-line interface.
 
+**📍 Where is the file created?**
+- SQLite creates the database file in your **current working directory** (the folder where you run the command)
+- To create it in a specific location, use the full path:
+  ```bash
+  sqlite3 C:\Users\YourName\Documents\my_first_database.db
+  ```
+- Or navigate to your desired folder first:
+  ```bash
+  cd C:\Users\YourName\Documents
+  sqlite3 my_first_database.db
+  ```
+
 ### Step 5: Test It Out
 
 Try a simple SQL command:
@@ -109,6 +123,40 @@ Hello, SQL!
 ```
 
 Type `.quit` to exit SQLite.
+
+### Useful SQLite Commands
+
+Once you're in the SQLite command-line interface, here are some helpful commands:
+
+**List all tables:**
+```bash
+.tables
+```
+
+**Show table structure:**
+```bash
+.schema                    # Show structure of all tables
+.schema table_name         # Show structure of a specific table
+```
+
+**List tables matching a pattern:**
+```bash
+.tables user%              # Lists tables starting with "user"
+```
+
+**Other useful commands:**
+```bash
+.help                     # Show all available commands
+.quit                     # Exit SQLite
+.headers on               # Show column headers in query results
+.mode column              # Display results in column format
+.mode table               # Display results in table format
+```
+
+**Using SQL query to list tables:**
+```sql
+SELECT name FROM sqlite_master WHERE type='table';
+```
 
 ### Using SQLite with a GUI Tool (Optional but Helpful)
 
@@ -576,7 +624,9 @@ Now that your environment is set up, you're ready to learn SQL!
 ### SQLite Issues
 
 **Problem:** `sqlite3: command not found`
-- **Solution:** Add SQLite to your system PATH, or use the full path to the executable
+- **Solution 1:** Make sure you downloaded `sqlite-tools-win-*.zip` (NOT `sqlite-dll-win-*.zip`). The DLL package doesn't include the command-line tool.
+- **Solution 2:** Add SQLite to your system PATH, or use the full path to the executable
+- **Solution 3:** After adding to PATH, close and reopen your terminal/command prompt
 
 **Problem:** Can't create database file
 - **Solution:** Check file permissions in the directory where you're creating the database
