@@ -2,13 +2,21 @@
 
 ## 📋 Overview
 
-This plan breaks down comprehensive SQL learning into multiple focused lessons. Each lesson will be created as a separate markdown file, allowing for deeper exploration and better learning progression. Lessons are designed to be 2-15 minutes long, making them perfect for quick learning sessions.
+This plan breaks down comprehensive SQL learning into 60 focused lessons. Each lesson will be created as a separate markdown file, allowing for deeper exploration and better learning progression. 
+
+**Structure:**
+- **Core SQL (Lessons 1-50):** Beginner to intermediate topics, 2-15 minutes each
+- **Advanced Topics (Lessons 51-60):** Production-level database concepts, 10-20 minutes each
+
+**Progress:** 5/60 lessons completed (8%)
 
 ---
 
 ## 🎯 Series Learning Objectives
 
 By the end of this series, you will:
+
+**Core SQL (Lessons 1-50):**
 - [ ] Understand SQL fundamentals and database concepts
 - [ ] Master data querying: SELECT, WHERE, ORDER BY, LIMIT
 - [ ] Master data manipulation: INSERT, UPDATE, DELETE
@@ -20,10 +28,22 @@ By the end of this series, you will:
 - [ ] Understand constraints: PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK
 - [ ] Master indexes and performance optimization
 - [ ] Understand transactions and ACID properties
-- [ ] Learn views, stored procedures, and triggers
+- [ ] Learn views and stored procedures
 - [ ] Explore advanced topics: window functions, recursive queries
 - [ ] Understand database design best practices
 - [ ] Learn query optimization techniques
+
+**Advanced Topics (Lessons 51-60):**
+- [ ] Understand database partitioning strategies
+- [ ] Learn database replication for high availability
+- [ ] Understand database sharding for horizontal scaling
+- [ ] Master connection pooling for performance
+- [ ] Understand lock management and deadlock prevention
+- [ ] Read and analyze query execution plans (EXPLAIN)
+- [ ] Create and use database triggers
+- [ ] Implement full-text search
+- [ ] Configure database security and permissions
+- [ ] Plan and execute backup and recovery strategies
 
 ---
 
@@ -1041,14 +1061,272 @@ By the end of this series, you will:
 
 ---
 
+## 🚀 Advanced Topics (Lessons 51-60)
+
+### Lesson 51: Database Partitioning
+**File:** `51-database-partitioning.md`
+
+**Content:**
+- What is database partitioning?
+- Horizontal vs vertical partitioning
+- Partitioning strategies:
+  - Range partitioning
+  - List partitioning
+  - Hash partitioning
+  - Composite partitioning
+- Partition pruning and query optimization
+- When to use partitioning
+- Real-world examples
+
+**Learning Objectives:**
+- Understand partitioning concepts
+- Choose the right partitioning strategy
+- Know when partitioning helps performance
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 52: Database Replication
+**File:** `52-database-replication.md`
+
+**Content:**
+- What is database replication?
+- Replication types:
+  - Master-Slave (Primary-Replica)
+  - Master-Master (Multi-Master)
+  - Synchronous vs Asynchronous
+- Replication lag and consistency
+- Read replicas for scaling
+- Failover and high availability
+- PostgreSQL streaming replication example
+- MySQL replication example
+
+**Learning Objectives:**
+- Understand replication concepts
+- Know different replication strategies
+- Understand consistency trade-offs
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 53: Database Sharding
+**File:** `53-database-sharding.md`
+
+**Content:**
+- What is sharding?
+- Sharding vs partitioning
+- Sharding strategies:
+  - Key-based (hash) sharding
+  - Range-based sharding
+  - Directory-based sharding
+  - Geographic sharding
+- Shard key selection
+- Cross-shard queries
+- Resharding challenges
+- When to shard (and when not to)
+
+**Learning Objectives:**
+- Understand sharding concepts
+- Choose appropriate shard keys
+- Know sharding trade-offs
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 54: Connection Pooling
+**File:** `54-connection-pooling.md`
+
+**Content:**
+- What is connection pooling?
+- Why connections are expensive
+- Connection pool configuration:
+  - Min/max connections
+  - Idle timeout
+  - Connection lifetime
+- Popular connection poolers:
+  - PgBouncer (PostgreSQL)
+  - ProxySQL (MySQL)
+- Application-level pooling
+- Best practices
+
+**Learning Objectives:**
+- Understand connection pooling benefits
+- Configure connection pools
+- Optimize connection usage
+
+**Estimated Duration:** 10-12 minutes
+
+---
+
+### Lesson 55: Lock Management and Deadlocks
+**File:** `55-lock-management-deadlocks.md`
+
+**Content:**
+- What are database locks?
+- Lock types:
+  - Shared (read) locks
+  - Exclusive (write) locks
+  - Row-level vs table-level locks
+- Lock modes and compatibility
+- Deadlocks:
+  - What causes deadlocks
+  - Deadlock detection
+  - Deadlock prevention
+- Lock timeout configuration
+- Monitoring locks
+- Best practices for avoiding locks
+
+**Learning Objectives:**
+- Understand locking mechanisms
+- Identify and prevent deadlocks
+- Write lock-friendly queries
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 56: EXPLAIN and Query Analysis
+**File:** `56-explain-query-analysis.md`
+
+**Content:**
+- EXPLAIN and EXPLAIN ANALYZE
+- Reading execution plans:
+  - Seq Scan vs Index Scan
+  - Nested Loop vs Hash Join vs Merge Join
+  - Sort operations
+  - Aggregate operations
+- Cost estimation
+- Identifying bottlenecks
+- Optimization strategies based on EXPLAIN
+- PostgreSQL vs MySQL EXPLAIN differences
+- Real-world optimization examples
+
+**Learning Objectives:**
+- Read and understand query plans
+- Identify performance bottlenecks
+- Optimize queries based on EXPLAIN output
+
+**Estimated Duration:** 15-20 minutes
+
+---
+
+### Lesson 57: Database Triggers
+**File:** `57-database-triggers.md`
+
+**Content:**
+- What are triggers?
+- Trigger types:
+  - BEFORE vs AFTER triggers
+  - INSERT, UPDATE, DELETE triggers
+  - Row-level vs statement-level
+- Creating triggers
+- Trigger functions
+- Common use cases:
+  - Audit logging
+  - Data validation
+  - Automatic updates
+- Trigger best practices
+- When NOT to use triggers
+
+**Learning Objectives:**
+- Create and use triggers
+- Understand trigger execution order
+- Know when triggers are appropriate
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 58: Full-Text Search
+**File:** `58-full-text-search.md`
+
+**Content:**
+- What is full-text search?
+- Full-text search vs LIKE
+- Text search in PostgreSQL:
+  - tsvector and tsquery
+  - Creating text search indexes
+  - Ranking results
+- Full-text search in MySQL:
+  - FULLTEXT indexes
+  - MATCH ... AGAINST
+- Search configurations and languages
+- Real-world examples
+
+**Learning Objectives:**
+- Implement full-text search
+- Create text search indexes
+- Rank and filter search results
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 59: Database Security
+**File:** `59-database-security.md`
+
+**Content:**
+- Authentication and authorization
+- User and role management:
+  - CREATE USER, CREATE ROLE
+  - GRANT and REVOKE
+- Principle of least privilege
+- Row-level security (PostgreSQL)
+- SQL injection prevention
+- Encryption:
+  - At rest
+  - In transit (SSL/TLS)
+- Auditing and logging
+- Security best practices
+
+**Learning Objectives:**
+- Configure database security
+- Manage users and permissions
+- Prevent common security issues
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
+### Lesson 60: Database Backup and Recovery
+**File:** `60-backup-recovery.md`
+
+**Content:**
+- Backup strategies:
+  - Full backups
+  - Incremental backups
+  - Point-in-time recovery (PITR)
+- Backup tools:
+  - pg_dump, pg_restore (PostgreSQL)
+  - mysqldump (MySQL)
+  - sqlite3 .backup (SQLite)
+- WAL archiving
+- Testing backups
+- Recovery procedures
+- Disaster recovery planning
+- Best practices
+
+**Learning Objectives:**
+- Create and restore backups
+- Understand backup strategies
+- Plan for disaster recovery
+
+**Estimated Duration:** 12-15 minutes
+
+---
+
 ## 📊 Series Statistics
 
-- **Total Lessons:** 50
-- **Estimated Total Duration:** 7-10 hours (all lessons 2-15 minutes)
-- **Difficulty Level:** Beginner to Intermediate
+- **Total Lessons:** 60 (50 core + 10 advanced)
+- **Estimated Total Duration:** 10-14 hours (all lessons 2-20 minutes)
+- **Difficulty Level:** Beginner to Advanced
 - **Prerequisites:** 
   - Basic computer literacy
-  - No prior database knowledge required
+  - No prior database knowledge required (for core lessons)
+  - Core lessons recommended before advanced topics
 
 ---
 
@@ -1058,41 +1336,60 @@ By the end of this series, you will:
 extensive-lessons/
 └── sql-lessons/
     ├── plan.md (this file)
-    ├── 01-introduction-to-sql.md
-    ├── 02-setting-up-sql-environment.md
-    ├── 03-tables-and-data-types.md
-    ├── 04-creating-tables.md
+    │
+    │   # Fundamentals (Lessons 1-10)
+    ├── 01-introduction-to-sql.md ✅
+    ├── 02-setting-up-sql-environment.md ✅
+    ├── 03-tables-and-data-types.md ✅
+    ├── 03a-sqlite-vs-postgresql-data-types.md ✅ (Supplementary)
+    ├── 04-creating-tables.md ✅
     ├── 05-select-retrieving-data.md
     ├── 06-where-filtering-data.md
     ├── 07-order-by-and-limit.md
     ├── 08-insert-adding-data.md
     ├── 09-update-modifying-data.md
     ├── 10-delete-removing-data.md
+    │
+    │   # Functions (Lessons 11-13)
     ├── 11-string-functions.md
     ├── 12-numeric-functions.md
     ├── 13-date-time-functions.md
+    │
+    │   # Aggregations (Lessons 14-16)
     ├── 14-aggregate-functions-basics.md
     ├── 15-group-by-grouping-data.md
     ├── 16-having-filtering-groups.md
+    │
+    │   # JOINs (Lessons 17-20)
     ├── 17-inner-join.md
     ├── 18-left-right-join.md
     ├── 19-full-outer-cross-join.md
     ├── 20-self-joins.md
+    │
+    │   # Subqueries & CTEs (Lessons 21-24)
     ├── 21-subqueries-basics.md
     ├── 22-subqueries-advanced.md
     ├── 23-common-table-expressions.md
     ├── 24-union-union-all.md
+    │
+    │   # Constraints (Lessons 25-29)
     ├── 25-primary-key-constraint.md
     ├── 26-foreign-key-constraint.md
     ├── 27-unique-check-constraints.md
     ├── 28-not-null-and-default.md
     ├── 29-alter-table.md
+    │
+    │   # Indexes & Performance (Lessons 30-31, 45)
     ├── 30-indexes-introduction.md
     ├── 31-indexes-best-practices.md
+    │
+    │   # Transactions (Lessons 32-35)
     ├── 32-transactions-introduction.md
     ├── 33-acid-properties.md
     ├── 34-views.md
     ├── 35-stored-procedures-introduction.md
+    │
+    │   # Advanced SQL (Lessons 36-42)
     ├── 36-case-statements.md
     ├── 37-window-functions-introduction.md
     ├── 38-window-functions-advanced.md
@@ -1100,14 +1397,30 @@ extensive-lessons/
     ├── 40-null-handling.md
     ├── 41-like-pattern-matching.md
     ├── 42-in-and-between.md
+    │
+    │   # Database Design (Lessons 43-44)
     ├── 43-normalization-basics.md
     ├── 44-database-relationships.md
+    │
+    │   # Optimization & Best Practices (Lessons 45-50)
     ├── 45-query-optimization-basics.md
     ├── 46-common-mistakes.md
     ├── 47-sql-best-practices.md
     ├── 48-sql-vs-nosql.md
     ├── 49-real-world-scenarios.md
-    └── 50-sql-summary-next-steps.md
+    ├── 50-sql-summary-next-steps.md
+    │
+    │   # Advanced Topics (Lessons 51-60) 🆕
+    ├── 51-database-partitioning.md
+    ├── 52-database-replication.md
+    ├── 53-database-sharding.md
+    ├── 54-connection-pooling.md
+    ├── 55-lock-management-deadlocks.md
+    ├── 56-explain-query-analysis.md
+    ├── 57-database-triggers.md
+    ├── 58-full-text-search.md
+    ├── 59-database-security.md
+    └── 60-backup-recovery.md
 ```
 
 ---
@@ -1154,8 +1467,9 @@ When creating each lesson, follow these guidelines:
 
 - [x] Lesson 1: Introduction to SQL and Databases
 - [x] Lesson 2: Setting Up Your SQL Environment
-- [ ] Lesson 3: Understanding Tables and Data Types
-- [ ] Lesson 4: Creating Your First Table
+- [x] Lesson 3: Understanding Tables and Data Types
+- [x] Lesson 3a: SQLite vs PostgreSQL Data Types Comparison (Supplementary)
+- [x] Lesson 4: Creating Your First Table
 - [ ] Lesson 5: SELECT - Retrieving Data
 - [ ] Lesson 6: WHERE - Filtering Data
 - [ ] Lesson 7: ORDER BY and LIMIT
@@ -1203,6 +1517,18 @@ When creating each lesson, follow these guidelines:
 - [ ] Lesson 49: Real-World SQL Scenarios
 - [ ] Lesson 50: SQL Summary and Next Steps
 
+**Advanced Topics (NEW):**
+- [ ] Lesson 51: Database Partitioning
+- [ ] Lesson 52: Database Replication
+- [ ] Lesson 53: Database Sharding
+- [ ] Lesson 54: Connection Pooling
+- [ ] Lesson 55: Lock Management and Deadlocks
+- [ ] Lesson 56: EXPLAIN and Query Analysis
+- [ ] Lesson 57: Database Triggers
+- [ ] Lesson 58: Full-Text Search
+- [ ] Lesson 59: Database Security
+- [ ] Lesson 60: Database Backup and Recovery
+
 ---
 
 ## 🔗 Related Resources
@@ -1228,76 +1554,90 @@ When creating each lesson, follow these guidelines:
 - Lesson 1: Introduction to SQL and Databases
 - Lesson 2: Setting Up Your SQL Environment
 - Lesson 3: Understanding Tables and Data Types
+- Lesson 3a: SQLite vs PostgreSQL Data Types Comparison (Optional)
 - Lesson 4: Creating Your First Table
 - Lesson 5: SELECT - Retrieving Data
+
+**Week 2: Filtering and Sorting**
 - Lesson 6: WHERE - Filtering Data
 - Lesson 7: ORDER BY and LIMIT
+- Lesson 41: LIKE and Pattern Matching
+- Lesson 42: IN and BETWEEN Operators
+- Lesson 40: NULL Handling - IS NULL, COALESCE, NULLIF
 
-**Week 2: Data Manipulation**
+**Week 3: Data Manipulation**
 - Lesson 8: INSERT - Adding Data
 - Lesson 9: UPDATE - Modifying Data
 - Lesson 10: DELETE - Removing Data
+- Lesson 36: CASE Statements
+
+**Week 4: Functions**
 - Lesson 11: String Functions
 - Lesson 12: Numeric Functions
 - Lesson 13: Date and Time Functions
 
-**Week 3: Aggregations and Grouping**
+**Week 5: Aggregations and Grouping**
 - Lesson 14: Aggregate Functions - COUNT, SUM, AVG
 - Lesson 15: GROUP BY - Grouping Data
 - Lesson 16: HAVING - Filtering Groups
-- Lesson 40: NULL Handling
-- Lesson 41: LIKE and Pattern Matching
-- Lesson 42: IN and BETWEEN Operators
 
-**Week 4: JOINs**
+**Week 6: JOINs**
 - Lesson 17: INNER JOIN - Combining Tables
 - Lesson 18: LEFT JOIN and RIGHT JOIN
 - Lesson 19: FULL OUTER JOIN and CROSS JOIN
 - Lesson 20: Self JOINs
 
-**Week 5: Advanced Queries**
+**Week 7: Subqueries and CTEs**
 - Lesson 21: Subqueries - Basics
 - Lesson 22: Subqueries - Advanced
 - Lesson 23: Common Table Expressions (CTEs)
 - Lesson 24: UNION and UNION ALL
-- Lesson 36: CASE Statements
 
-**Week 6: Constraints and Schema**
+**Week 8: Constraints and Schema Design**
 - Lesson 25: PRIMARY KEY Constraint
 - Lesson 26: FOREIGN KEY Constraint
 - Lesson 27: UNIQUE and CHECK Constraints
 - Lesson 28: NOT NULL and DEFAULT
 - Lesson 29: ALTER TABLE - Modifying Tables
 
-**Week 7: Performance and Optimization**
+**Week 9: Database Design**
+- Lesson 43: Database Design - Normalization Basics
+- Lesson 44: Database Design - Relationships
+
+**Week 10: Indexes and Performance**
 - Lesson 30: Indexes - Introduction
 - Lesson 31: Indexes - Best Practices
 - Lesson 45: Query Optimization - Basics
 
-**Week 8: Transactions and Advanced Features**
+**Week 11: Transactions and ACID**
 - Lesson 32: Transactions - Introduction
 - Lesson 33: ACID Properties Deep Dive
 - Lesson 34: Views - Creating and Using
-- Lesson 35: Stored Procedures - Introduction
 
-**Week 9: Advanced SQL**
+**Week 12: Stored Procedures and Advanced Features**
+- Lesson 35: Stored Procedures - Introduction
 - Lesson 37: Window Functions - Introduction
 - Lesson 38: Window Functions - Advanced
 - Lesson 39: Recursive CTEs
 
-**Week 10: Design and Best Practices**
-- Lesson 43: Database Design - Normalization Basics
-- Lesson 44: Database Design - Relationships
+**Week 13: Best Practices and Real-World**
 - Lesson 46: Common SQL Mistakes and How to Avoid Them
 - Lesson 47: SQL Best Practices
 - Lesson 48: SQL vs NoSQL - When to Use What
-
-**Week 11: Application**
 - Lesson 49: Real-World SQL Scenarios
+
+**Week 14: Advanced Topics (NEW)**
+- Lesson 51: Database Partitioning
+- Lesson 52: Database Replication
+- Lesson 53: Database Sharding
+- Lesson 54: Connection Pooling
+- Lesson 55: Lock Management and Deadlocks
+
+**Week 15: Summary and Next Steps**
 - Lesson 50: SQL Summary and Next Steps
 
 ---
 
-*Last Updated: 2026-01-23*
-*Status: Planning Phase - Lessons to be created*
+*Last Updated: 2026-02-03*
+*Status: In Progress - 5 lessons completed, 55 remaining*
 
