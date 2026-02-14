@@ -28,7 +28,6 @@
 - **Storage Cost** - Takes up database space
 - **Performance Gain** - Much faster than running the original query
 
-**Key Principle:**
 > "A materialized view is like a snapshot of a complex query result. Instead of running the expensive query every time, you run it once, store the result, and query the stored result. You refresh it when the underlying data changes."
 
 ---
@@ -362,54 +361,6 @@ WHERE lifetime_value > 1000;
 
 ---
 
-## 💡 When to Use Materialized Views
-
-### Use Materialized Views When:
-
-✅ **Expensive Queries**
-- Complex joins across multiple tables
-- Heavy aggregations (SUM, COUNT, AVG)
-- Calculations and transformations
-- Queries taking seconds or minutes
-
-✅ **Read-Heavy, Write-Light**
-- Many reads, few writes
-- Reports and analytics
-- Dashboards
-- Frequently accessed summaries
-
-✅ **Data Changes Infrequently**
-- Historical data
-- Reference data
-- Periodic reports
-- Can tolerate some staleness
-
-✅ **Performance Critical**
-- User-facing queries
-- Real-time dashboards
-- Search results
-- API responses
-
-### Don't Use Materialized Views When:
-
-❌ **Real-Time Data Required**
-- Always need current data
-- High write frequency
-- Can't tolerate staleness
-- Financial transactions
-
-❌ **Simple Queries**
-- Queries already fast
-- No performance issues
-- Overhead not justified
-
-❌ **Storage Constraints**
-- Limited storage
-- Very large result sets
-- Storage expensive
-
----
-
 ## 🏛️ Implementation Examples
 
 ### Example 1: Sales Dashboard
@@ -612,20 +563,6 @@ CREATE INDEX idx_user_stats_total_spent ON user_stats(total_spent);
 
 ## 🔀 Materialized Views vs Other Patterns
 
-### Materialized Views vs Regular Views
-
-**Regular Views:**
-- Virtual (no storage)
-- Always current
-- Slower (computes each time)
-- Simple queries
-
-**Materialized Views:**
-- Physical (takes storage)
-- May be stale
-- Faster (pre-computed)
-- Complex queries
-
 ### Materialized Views vs Caching
 
 **Caching:**
@@ -780,11 +717,6 @@ After mastering Materialized Views, consider:
 ---
 
 ## 📚 Additional Resources
-
-**Related Patterns:**
-- [Denormalization](./2026-01-22-denormalization.md) - Optimize read performance
-- [Projections](./2026-01-21-projections.md) - Build read models from events
-- [CQRS](./2026-01-20-cqrs-pattern.md) - Separate read and write models
 
 **Database Documentation:**
 - PostgreSQL Materialized Views

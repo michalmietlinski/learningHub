@@ -101,6 +101,75 @@ CREATE TABLE students (
 - IDs, ages, counts, quantities
 - Any whole number value
 
+### Auto-Incrementing IDs in SQLite
+
+SQLite has a special feature for creating auto-incrementing primary keys (like `SERIAL` in PostgreSQL or `AUTO_INCREMENT` in MySQL).
+
+**Method 1: INTEGER PRIMARY KEY (Recommended)**
+```sql
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,    -- Auto-increments automatically!
+    name TEXT,
+    email TEXT
+);
+
+-- Insert without specifying ID
+INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
+INSERT INTO users (name, email) VALUES ('Bob', 'bob@example.com');
+
+-- IDs are automatically assigned: 1, 2, 3, ...
+```
+
+**Method 2: INTEGER PRIMARY KEY AUTOINCREMENT**
+```sql
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Never reuses deleted IDs
+    name TEXT,
+    email TEXT
+);
+```
+
+**Key Differences:**
+
+| Feature | `INTEGER PRIMARY KEY` | `INTEGER PRIMARY KEY AUTOINCREMENT` |
+|---------|----------------------|-------------------------------------|
+| **Auto-increment** | ✅ Yes | ✅ Yes |
+| **Reuses deleted IDs** | ✅ Yes (may have gaps) | ❌ No (guaranteed no reuse) |
+| **Performance** | ⚡ Faster | ⚠️ Slightly slower |
+| **Max ID tracking** | No | Yes (uses sqlite_sequence table) |
+| **When to use** | Most cases (recommended) | When you need guaranteed unique IDs even after deletions |
+
+**Example:**
+```sql
+-- Create table
+CREATE TABLE test (
+    id INTEGER PRIMARY KEY,
+    name TEXT
+);
+
+-- Insert rows
+INSERT INTO test (name) VALUES ('First');
+INSERT INTO test (name) VALUES ('Second');
+-- IDs: 1, 2
+
+-- Delete a row
+DELETE FROM test WHERE id = 1;
+
+-- Insert new row
+INSERT INTO test (name) VALUES ('Third');
+-- ID: 3 (not 1) - gap is created
+
+-- With AUTOINCREMENT, deleted IDs are never reused
+```
+
+**Important Notes:**
+- Only works with `INTEGER` type (not `TEXT` or `REAL`)
+- Must be `PRIMARY KEY` (or `UNIQUE` + `NOT NULL`)
+- You can still manually insert IDs if needed
+- If you insert a specific ID, SQLite will use the next available number after the highest ID
+
+**Best Practice:** Use `INTEGER PRIMARY KEY` for most cases. Only use `AUTOINCREMENT` if you need to guarantee that deleted IDs are never reused.
+
 ### REAL
 
 Used for floating-point numbers (decimals).

@@ -10,6 +10,7 @@
 - [ ] Practice implementing modular systems in real scenarios
 - [ ] Learn module encapsulation and information hiding
 - [ ] Explore real-world module systems (ES6, Java 9+, Python, etc.)
+- [ ] **Master tree shaking and dead code elimination**
 - [ ] Understand common pitfalls and best practices
 - [ ] Compare with Component-Based Architecture and other patterns
 
@@ -628,6 +629,321 @@ console.log(user._id); // Undefined/Error - private
 | **Flexibility** | Less flexible | More flexible |
 | **Performance** | Better (optimized) | Good (dynamic) |
 | **Type Safety** | Strong | Weaker |
+
+### 7. Tree Shaking Deep Dive
+
+**Definition:**
+Tree shaking is a dead code elimination technique that removes unused exports from the final bundle during the build process. The name comes from the idea of "shaking" a dependency tree to remove dead leaves (unused code).
+
+**How Tree Shaking Works:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Tree Shaking Process                          │
+│                                                                  │
+│   1. BUILD DEPENDENCY GRAPH                                     │
+│   ──────────────────────────                                    │
+│                                                                  │
+│   Entry: main.js                                                │
+│       │                                                          │
+│       ├── import { add } from './math.js'                       │
+│       │       │                                                  │
+│       │       ├── export function add() { }      ✅ USED        │
+│       │       ├── export function subtract() { } ❌ UNUSED      │
+│       │       └── export function multiply() { } ❌ UNUSED      │
+│       │                                                          │
+│       └── import { formatDate } from './utils.js'               │
+│               │                                                  │
+│               ├── export function formatDate() { } ✅ USED      │
+│               ├── export function formatTime() { }  ❌ UNUSED   │
+│               └── export const CONSTANTS = { }      ❌ UNUSED   │
+│                                                                  │
+│   2. MARK USED EXPORTS                                          │
+│   ────────────────────                                          │
+│                                                                  │
+│   Traverse from entry point, mark all reachable exports         │
+│                                                                  │
+│   3. ELIMINATE DEAD CODE                                        │
+│   ──────────────────────                                        │
+│                                                                  │
+│   Remove all unmarked (unused) exports from final bundle        │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Before vs After Tree Shaking:**
+
+```javascript
+// ─────────────────────────────────────────────────────────────
+// SOURCE FILES (Before Build)
+// ─────────────────────────────────────────────────────────────
+
+// math.js - 500 lines of code
+export function add(a, b) { return a + b; }
+export function subtract(a, b) { return a - b; }
+export function multiply(a, b) { return a * b; }
+export function divide(a, b) { return a / b; }
+export function power(a, b) { return Math.pow(a, b); }
+export function sqrt(a) { return Math.sqrt(a); }
+// ... 50 more math functions
+
+// utils.js - 1000 lines of code
+export function formatDate(date) { /* ... */ }
+export function formatTime(time) { /* ... */ }
+export function formatCurrency(amount) { /* ... */ }
+export function debounce(fn, delay) { /* ... */ }
+export function throttle(fn, limit) { /* ... */ }
+// ... 100 more utility functions
+
+// main.js - Application entry point
+import { add } from './math.js';
+import { formatDate } from './utils.js';
+
+console.log(add(2, 3));
+console.log(formatDate(new Date()));
+
+// ─────────────────────────────────────────────────────────────
+// WITHOUT TREE SHAKING: ~1500 lines bundled
+// WITH TREE SHAKING: ~50 lines bundled (only add + formatDate)
+// ─────────────────────────────────────────────────────────────
+```
+
+**Requirements for Effective Tree Shaking:**
+
+```javascript
+// ✅ WORKS: ES Modules with static imports
+import { specific } from './module';
+
+// ❌ DOESN'T WORK: CommonJS (dynamic, not analyzable)
+const module = require('./module');
+const { specific } = require('./module');
+
+// ✅ WORKS: Named exports (individually shakeable)
+export function functionA() { }
+export function functionB() { }
+export const VALUE = 42;
+
+// ⚠️ HARDER: Default export object (all-or-nothing)
+export default {
+    functionA: () => { },
+    functionB: () => { },
+    VALUE: 42
+};
+
+// ❌ PREVENTS SHAKING: Side effects at module level
+let counter = 0;
+export function increment() { counter++; }
+console.log('Module loaded!');  // Side effect - can't be removed
+
+// ✅ SHAKEABLE: Pure functions (no side effects)
+export function pureAdd(a, b) {
+    return a + b;  // No external state, no side effects
+}
+```
+
+**Side Effects and Tree Shaking:**
+
+```javascript
+// ─────────────────────────────────────────────────────────────
+// SIDE EFFECTS EXPLAINED
+// ─────────────────────────────────────────────────────────────
+
+// Side effect: Code that affects something outside its scope
+// - Modifying global variables
+// - DOM manipulation
+// - Console logging
+// - Network requests
+// - Writing to files
+
+// Module WITH side effects (can't be fully tree-shaken)
+// polyfills.js
+if (!Array.prototype.includes) {
+    Array.prototype.includes = function(item) { /* ... */ };
+}
+// This MUST run even if nothing is imported from this file!
+
+// Module WITHOUT side effects (safe to tree-shake)
+// math.js
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+// These can be safely removed if not imported
+```
+
+**Configuring Tree Shaking:**
+
+```json
+// package.json - Mark package as side-effect free
+{
+    "name": "my-library",
+    "version": "1.0.0",
+    
+    // Option 1: All files are side-effect free
+    "sideEffects": false,
+    
+    // Option 2: Specify files WITH side effects
+    "sideEffects": [
+        "*.css",
+        "*.scss",
+        "./src/polyfills.js",
+        "./src/analytics.js"
+    ]
+}
+```
+
+**Bundler Configuration:**
+
+```javascript
+// ─────────────────────────────────────────────────────────────
+// WEBPACK (webpack.config.js)
+// ─────────────────────────────────────────────────────────────
+module.exports = {
+    mode: 'production',  // Tree shaking enabled by default
+    optimization: {
+        usedExports: true,     // Mark unused exports
+        minimize: true,         // Remove dead code
+        sideEffects: true,      // Respect sideEffects in package.json
+    }
+};
+
+// ─────────────────────────────────────────────────────────────
+// ROLLUP (rollup.config.js)
+// ─────────────────────────────────────────────────────────────
+export default {
+    input: 'src/main.js',
+    output: {
+        file: 'dist/bundle.js',
+        format: 'esm'
+    },
+    treeshake: {
+        moduleSideEffects: false,  // Assume no side effects
+        propertyReadSideEffects: false
+    }
+};
+
+// ─────────────────────────────────────────────────────────────
+// VITE (vite.config.js)
+// ─────────────────────────────────────────────────────────────
+export default {
+    build: {
+        rollupOptions: {
+            treeshake: true  // Enabled by default
+        }
+    }
+};
+```
+
+**Tree Shaking Best Practices:**
+
+```javascript
+// ─────────────────────────────────────────────────────────────
+// ✅ DO: Use named exports
+// ─────────────────────────────────────────────────────────────
+// utils.js
+export function formatDate(date) { /* ... */ }
+export function formatTime(time) { /* ... */ }
+
+// consumer.js
+import { formatDate } from './utils';  // Only formatDate bundled
+
+// ─────────────────────────────────────────────────────────────
+// ❌ DON'T: Export everything as object
+// ─────────────────────────────────────────────────────────────
+// utils.js
+export default {
+    formatDate: (date) => { /* ... */ },
+    formatTime: (time) => { /* ... */ }
+};
+
+// consumer.js
+import utils from './utils';  // ENTIRE object bundled
+utils.formatDate(new Date());
+
+// ─────────────────────────────────────────────────────────────
+// ✅ DO: Re-export selectively in barrel files
+// ─────────────────────────────────────────────────────────────
+// index.js (barrel file)
+export { formatDate } from './date';
+export { formatCurrency } from './currency';
+// Only re-export what's needed
+
+// ─────────────────────────────────────────────────────────────
+// ⚠️ CAREFUL: Barrel files can hurt tree shaking
+// ─────────────────────────────────────────────────────────────
+// Bad barrel file pattern:
+// index.js
+export * from './moduleA';  // Imports everything
+export * from './moduleB';  // Even if only one thing is used
+export * from './moduleC';
+
+// Better: Explicit re-exports
+export { specificThing } from './moduleA';
+```
+
+**Debugging Tree Shaking:**
+
+```javascript
+// ─────────────────────────────────────────────────────────────
+// WEBPACK: Analyze what's included
+// ─────────────────────────────────────────────────────────────
+// Install: npm install webpack-bundle-analyzer
+
+// webpack.config.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+module.exports = {
+    plugins: [
+        new BundleAnalyzerPlugin()  // Visual bundle analysis
+    ]
+};
+
+// ─────────────────────────────────────────────────────────────
+// Check if exports are being tree-shaken
+// ─────────────────────────────────────────────────────────────
+// In development build, look for comments like:
+/* unused harmony export subtract */
+/* unused harmony export multiply */
+
+// These indicate the bundler identified unused code
+```
+
+**Tree Shaking Impact Example:**
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    Bundle Size Comparison                        │
+│                                                                  │
+│   Library: lodash                                               │
+│                                                                  │
+│   // Importing everything                                       │
+│   import _ from 'lodash';                                       │
+│   _.map([1, 2, 3], n => n * 2);                                │
+│   Bundle: ~70KB (entire lodash)                                 │
+│                                                                  │
+│   // Tree-shakeable import                                      │
+│   import { map } from 'lodash-es';                             │
+│   map([1, 2, 3], n => n * 2);                                  │
+│   Bundle: ~2KB (only map function)                              │
+│                                                                  │
+│   // Even better: specific import                               │
+│   import map from 'lodash/map';                                │
+│   map([1, 2, 3], n => n * 2);                                  │
+│   Bundle: ~2KB (only map function)                              │
+│                                                                  │
+│   Savings: 97% reduction in bundle size! 🎉                    │
+│                                                                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Tree Shaking Limitations:**
+
+| Limitation | Description | Workaround |
+|------------|-------------|------------|
+| **CommonJS** | Not statically analyzable | Use ES modules |
+| **Dynamic imports** | `import(expr)` can't be analyzed | Use static paths |
+| **Side effects** | Module-level code must run | Mark `sideEffects: false` |
+| **Eval/new Function** | Dynamic code can't be analyzed | Avoid eval |
+| **Object exports** | Can't shake object properties | Use named exports |
+| **Class methods** | Hard to shake unused methods | Use functions |
 
 ---
 

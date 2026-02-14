@@ -1122,6 +1122,61 @@ async rebuild(events: DomainEvent[]): Promise<void> {
 
 **Key Difference:** Event Sourcing uses events as storage, Event-Driven uses events for communication.
 
+### Event Sourcing vs CQRS
+
+**Event Sourcing:**
+- Events are the source of truth
+- State derived from events by replaying
+- Event store is primary storage
+- Focus on event storage and state reconstruction
+- Complete audit trail and time travel capabilities
+- Can work without CQRS
+
+**CQRS:**
+- Separates read and write operations
+- Different models for reads and writes
+- Focus on model separation and optimization
+- Can use traditional databases or event store
+- Independent optimization of read/write sides
+- Can work without Event Sourcing
+
+**Key Differences:**
+
+| Aspect | Event Sourcing | CQRS |
+|--------|---------------|------|
+| **Core Purpose** | Store events as source of truth | Separate read/write operations |
+| **Storage Model** | Append-only event log | Can be traditional DB or event store |
+| **State Management** | State reconstructed from events | Write model stores current state |
+| **Read Models** | Built via projections from events | Denormalized read models (independent) |
+| **History** | Complete audit trail (built-in) | May or may not have complete history |
+| **Time Travel** | Can reconstruct state at any point | Not inherently supported |
+| **Independence** | Can work standalone | Can work standalone |
+| **Complexity** | Complex due to event replay | Complex due to model synchronization |
+| **Use Case Focus** | Audit trail, history, time travel | Performance optimization, scalability |
+| **When Combined** | Events feed CQRS read models | CQRS read models built from ES events |
+
+**When to Use Each:**
+
+**Use Event Sourcing When:**
+- Need complete audit trail
+- Time travel queries required
+- Complete history is important
+- Regulatory/compliance requirements
+- Need to rebuild state from events
+
+**Use CQRS When:**
+- Read/write workloads differ significantly
+- Need independent optimization
+- Complex domain models
+- Different scalability requirements
+- Multiple read views needed
+
+**Use Both Together When:**
+- Need audit trail AND performance optimization
+- Event sourcing provides events for CQRS projections
+- Complex systems requiring both patterns
+- High-performance systems with compliance needs
+
 ---
 
 ## 🌍 Real-World Applications

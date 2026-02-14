@@ -843,35 +843,101 @@ export class UserViewModel {
 
 ### MVVM vs MVC
 
-**MVVM:**
-- ViewModel mediates
-- Data binding
-- Automatic synchronization
-- Reactive updates
+**Fundamental Difference:**
+The core distinction between MVVM and MVC lies in how the View and Model stay synchronized. In MVC, the Controller manually coordinates updates between View and Model, often using the Observer pattern where the View observes Model changes. In MVVM, the ViewModel acts as a reactive intermediary that automatically synchronizes with the View through data binding mechanisms provided by the framework.
 
-**MVC:**
-- Controller coordinates
-- Manual synchronization
-- Observer pattern
-- More control
+**Communication Flow:**
 
-**Key Difference:** MVVM uses data binding for automatic synchronization.
+In **MVC**, the flow is more explicit and manual:
+1. User interacts with View
+2. View sends input to Controller
+3. Controller processes input and updates Model
+4. Model notifies View of changes (via Observer pattern)
+5. View manually updates its display
+
+In **MVVM**, the flow is more automatic:
+1. User interacts with View
+2. View binding automatically updates ViewModel
+3. ViewModel processes and updates Model
+4. ViewModel changes automatically trigger View updates via binding
+5. No manual synchronization code needed
+
+**ViewModel vs Controller Role:**
+
+The **ViewModel** in MVVM is designed to be a presentation model - it holds the state and presentation logic specifically formatted for the View. It exposes properties and commands that the View can bind to, and the framework handles the synchronization automatically. The ViewModel doesn't know about the View's implementation details.
+
+The **Controller** in MVC is more of a coordinator - it receives user input, decides what to do with it, updates the Model, and then selects which View to render. The Controller has more control over the flow and can choose different Views based on the situation.
+
+**Data Synchronization:**
+
+**MVVM** uses declarative data binding where you declare in the View template how properties should be bound (e.g., `{{email}}` or `[(ngModel)]="email"`). The framework's binding engine automatically keeps View and ViewModel in sync. When the user types in an input field, the ViewModel property updates automatically. When the ViewModel property changes programmatically, the View updates automatically.
+
+**MVC** requires imperative code to keep View and Model synchronized. The developer must write code to update the View when the Model changes (often using Observer pattern), and code to read from the View and update the Model when the user interacts. This gives more control but requires more boilerplate code.
+
+**When to Choose:**
+
+Choose **MVVM** when you're using a framework with strong data binding support (Angular, Vue, WPF) and want automatic synchronization with less code. MVVM excels when you have complex forms, real-time data updates, or reactive UI requirements.
+
+Choose **MVC** when you need more explicit control over the flow, when working with frameworks that don't have strong data binding (like traditional server-side MVC), or when you prefer the Observer pattern for Model-View communication. MVC is better when you need to dynamically select different Views or when the View-Model relationship is more complex.
+
+**Code Example Comparison:**
+
+```typescript
+// MVC: Manual synchronization
+class UserController {
+  updateEmail(newEmail: string): void {
+    this.model.setEmail(newEmail);
+    this.view.setEmailDisplay(newEmail); // Manual update
+    this.view.showSuccessMessage(); // Manual update
+  }
+}
+
+// MVVM: Automatic synchronization
+class UserViewModel {
+  email: string = '';
+  // View automatically updates when email changes
+  // No manual view.update() calls needed
+}
+```
 
 ### MVVM vs MVP
 
-**MVVM:**
-- Data binding
-- ViewModel is reactive
-- Automatic updates
-- Less code
+**Fundamental Difference:**
+The key difference between MVVM and MVP is the mechanism for keeping View and presentation logic synchronized. MVP uses manual synchronization where the Presenter explicitly calls methods on the View interface to update it. MVVM uses automatic data binding where the framework handles synchronization between View and ViewModel.
 
-**MVP:**
-- Manual synchronization
-- Presenter is active
-- More control
-- More code
+**View Passivity:**
 
-**Key Difference:** MVVM uses data binding, MVP uses manual synchronization.
+In **MVP**, the View is completely passive - it implements an interface defined by the Presenter and only displays what the Presenter tells it to display. The Presenter is active and controls everything. When data changes, the Presenter must explicitly call methods like `view.setEmail(email)` or `view.showError(message)`.
+
+In **MVVM**, the View is also passive but uses data binding instead of method calls. The View binds to ViewModel properties declaratively, and the framework automatically updates the View when those properties change. The ViewModel doesn't need to know about View methods - it just updates its own properties.
+
+**Synchronization Approach:**
+
+**MVP** requires the Presenter to manually update the View through interface methods. This means:
+- Presenter must call `view.setProperty(value)` for every update
+- Presenter must manage all View state updates
+- More code to write and maintain
+- More explicit control over what gets updated
+
+**MVVM** uses automatic binding, which means:
+- ViewModel just updates its properties
+- Framework automatically updates bound View elements
+- Less code to write
+- Less explicit control (binding handles it)
+
+**Testability:**
+
+Both patterns are highly testable, but in different ways:
+
+**MVP** is testable because the Presenter depends on a View interface that can be easily mocked. You can test the Presenter by verifying it calls the correct View methods with the correct parameters.
+
+**MVVM** is testable because the ViewModel can be tested independently - you can test that properties update correctly and commands execute properly, without needing the View at all.
+
+**When to Choose:**
+
+Choose **MVP** when you want explicit control over View updates, when working without data binding frameworks, or when you prefer the interface-based approach for maximum testability. MVP is excellent for desktop applications and scenarios where you want to see exactly what's being updated.
+
+Choose **MVVM** when you have data binding framework support and want less boilerplate code. MVVM is ideal for modern web frameworks, reactive UIs, and when you want the framework to handle synchronization automatically.
 
 ---
 
@@ -964,21 +1030,6 @@ export class UserViewModel {
 6. **Framework Support** - Requires data binding frameworks
 7. **Reactive UI** - Automatic UI updates
 8. **Separation** - Clear component responsibilities
-
-### When to Use
-
-✅ **Use MVVM When:**
-- Using data binding frameworks
-- Need reactive UI updates
-- Complex presentation logic
-- High testability requirements
-- Separation of UI and logic
-
-❌ **Avoid MVVM When:**
-- Simple applications
-- No data binding support
-- Performance-critical apps
-- Simple UI requirements
 
 ### Best Practices
 
