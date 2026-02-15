@@ -1,0 +1,55 @@
+{
+  "topic": "Abstract Factory Pattern",
+  "source": "lessons-of-the-day/2025-12-15-abstract-factory-pattern.md",
+  "flashcards": [
+    {
+      "q": "What is the Abstract Factory pattern?",
+      "a": "A creational pattern that creates FAMILIES of related/dependent objects without specifying concrete classes."
+    },
+    {
+      "q": "What is Abstract Factory also known as?",
+      "a": "Kit Pattern."
+    },
+    {
+      "q": "What are the 5 participants in Abstract Factory?",
+      "a": "1) AbstractFactory, 2) ConcreteFactory, 3) AbstractProduct, 4) ConcreteProduct, 5) Client (uses only abstractions)."
+    },
+    {
+      "q": "How does Abstract Factory differ from Factory Method?",
+      "a": "Abstract Factory: creates FAMILIES of products using composition, multiple methods. Factory Method: creates ONE product type using inheritance, single method."
+    },
+    {
+      "q": "When should you use Abstract Factory?",
+      "a": "When you need families of related products that must work together (e.g., UI themes, cross-platform components, database providers)."
+    },
+    {
+      "q": "When should you NOT use Abstract Factory?",
+      "a": "When you only need one product type (use Factory Method), products aren't related, or for simple object creation."
+    },
+    {
+      "q": "What is the key principle of Abstract Factory?",
+      "a": "'Create families of related objects together' - The factory creates multiple products that work together."
+    },
+    {
+      "q": "Name 3 real-world examples of Abstract Factory.",
+      "a": "1) Cross-platform UI frameworks (React Native, Flutter), 2) ORM database providers (Sequelize, TypeORM), 3) Theme systems (Material-UI dark/light)."
+    },
+    {
+      "q": "What is a common pitfall with Abstract Factory?",
+      "a": "Mixing products from different families - always use products from the SAME factory instance."
+    },
+    {
+      "q": "What is the main disadvantage of Abstract Factory?",
+      "a": "Adding new product types requires modifying the abstract factory interface and ALL concrete factories."
+    },
+    {
+      "q": "How can Abstract Factory be combined with Singleton?",
+      "a": "Factory itself can be a Singleton, or factories can create Singleton products."
+    },
+    {
+      "q": "What SOLID principle does Abstract Factory support?",
+      "a": "Open/Closed Principle - easy to add new product families without modifying existing code (but not new product types)."
+    }
+  ]
+}
+
