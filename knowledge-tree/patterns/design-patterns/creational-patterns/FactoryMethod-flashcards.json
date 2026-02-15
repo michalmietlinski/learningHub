@@ -1,0 +1,87 @@
+{
+  "topic": "Factory Method Pattern",
+  "source": "lessons-of-the-day/2025-12-14-factory-method-pattern.md",
+  "flashcards": [
+    {
+      "q": "What is the Factory Method pattern?",
+      "a": "A creational pattern that provides an interface for creating objects, but lets SUBCLASSES decide which class to instantiate."
+    },
+    {
+      "q": "What is Factory Method also known as?",
+      "a": "Virtual Constructor."
+    },
+    {
+      "q": "What is the key principle of Factory Method?",
+      "a": "'Don't call us, we'll call you' - The framework calls your factory method when it needs an object."
+    },
+    {
+      "q": "What are the 4 participants in Factory Method pattern?",
+      "a": "1) Product (interface), 2) ConcreteProduct (implements Product), 3) Creator (declares factory method), 4) ConcreteCreator (overrides factory method)."
+    },
+    {
+      "q": "When should you use Factory Method?",
+      "a": "When you don't know exact types beforehand, want to provide framework extension points, or want to localize object creation logic."
+    },
+    {
+      "q": "When should you NOT use Factory Method?",
+      "a": "For simple object creation where you always know the type, or when you need families of related objects (use Abstract Factory instead)."
+    },
+    {
+      "q": "How does Factory Method differ from Simple Factory?",
+      "a": "Factory Method uses inheritance with subclass hierarchy. Simple Factory is just one class with switch statement - not a design pattern, just an idiom."
+    },
+    {
+      "q": "How does Factory Method differ from Abstract Factory?",
+      "a": "Factory Method: creates ONE type of product using inheritance. Abstract Factory: creates FAMILIES of related products using composition with multiple factory methods."
+    },
+    {
+      "q": "How does Factory Method differ from Builder?",
+      "a": "Factory Method focuses on WHICH object to create (simple creation). Builder focuses on HOW to construct complex objects step-by-step."
+    },
+    {
+      "q": "What is Parameterized Factory Method?",
+      "a": "A variation where factory method accepts parameters to determine which product type to create (often uses switch statement)."
+    },
+    {
+      "q": "What is Lazy Initialization in Factory Method?",
+      "a": "A variation where products are created only when first needed, not upfront."
+    },
+    {
+      "q": "What is the Registry Pattern variation?",
+      "a": "Products are registered dynamically at runtime into a map/registry, and factory looks up the product class by type key."
+    },
+    {
+      "q": "What SOLID principles does Factory Method support?",
+      "a": "1) Single Responsibility - creation code isolated. 2) Open/Closed - add new products without modifying existing code."
+    },
+    {
+      "q": "What pattern often works hand-in-hand with Factory Method?",
+      "a": "Template Method - the creator's template method uses the factory method internally, hiding it from clients."
+    },
+    {
+      "q": "Name 3 real-world examples of Factory Method.",
+      "a": "1) React's createElement(), 2) Node.js fs.createReadStream/WriteStream, 3) Express middleware factories (express.json())."
+    },
+    {
+      "q": "Why is Factory Method essential for framework design?",
+      "a": "It allows framework to define the workflow but lets users extend it by implementing their own concrete creators and products."
+    },
+    {
+      "q": "What is a common pitfall with Factory Method?",
+      "a": "Overusing it - don't create factories for simple object creation where direct instantiation works fine."
+    },
+    {
+      "q": "What should a factory method focus on?",
+      "a": "Only creation. Keep factory methods simple - don't add initialization, validation, setup, or connection logic."
+    },
+    {
+      "q": "What is Static Factory Method?",
+      "a": "A variation where factory method is static (class method) - simpler but loses ability to override in subclasses."
+    },
+    {
+      "q": "What are the main disadvantages of Factory Method?",
+      "a": "Code complexity (many subclasses), inheritance-based (not composition), indirection makes code harder to follow."
+    }
+  ]
+}
+
