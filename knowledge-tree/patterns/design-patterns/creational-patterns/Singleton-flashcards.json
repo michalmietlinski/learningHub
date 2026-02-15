@@ -1,0 +1,79 @@
+{
+  "topic": "Singleton Pattern",
+  "source": "lessons-of-the-day/2025-12-13-singleton-pattern.md",
+  "flashcards": [
+    {
+      "q": "What is the Singleton pattern?",
+      "a": "A creational design pattern that ensures a class has only ONE instance and provides a global point of access to it."
+    },
+    {
+      "q": "What two problems does Singleton solve?",
+      "a": "1) Ensures only one instance exists. 2) Provides global access to that instance."
+    },
+    {
+      "q": "What are the key components of a Singleton?",
+      "a": "Private static instance, private constructor, and public static getInstance() method."
+    },
+    {
+      "q": "Name 4 common use cases for Singleton.",
+      "a": "Database connection pools, Logger instances, Configuration managers, Cache managers."
+    },
+    {
+      "q": "What is Eager Initialization?",
+      "a": "Instance is created when the class is loaded, before it's actually needed. Thread-safe but not lazy."
+    },
+    {
+      "q": "What is the problem with basic Lazy Initialization?",
+      "a": "It's NOT thread-safe - multiple threads could create multiple instances (race condition)."
+    },
+    {
+      "q": "What is Double-Checked Locking?",
+      "a": "Check if instance is null twice - first without sync, then inside synchronized block. Requires 'volatile' keyword in Java."
+    },
+    {
+      "q": "What is the Bill Pugh solution (Initialization-on-Demand Holder)?",
+      "a": "Uses a nested static class to hold the instance. Thread-safe, lazy, no sync overhead. Considered one of the best approaches."
+    },
+    {
+      "q": "Why is Enum Singleton recommended in Java?",
+      "a": "Thread-safe, serialization-safe, reflection-safe, simple. Recommended by Joshua Bloch in 'Effective Java'."
+    },
+    {
+      "q": "Why are JS/TS modules naturally singletons?",
+      "a": "ES6 modules are cached after first import - the same instance is returned on subsequent imports."
+    },
+    {
+      "q": "What SOLID principle does Singleton violate?",
+      "a": "Single Responsibility Principle - class manages both its purpose AND instance creation."
+    },
+    {
+      "q": "Why is Singleton difficult to test?",
+      "a": "Global state, hidden dependencies, hard to mock or replace in unit tests, tight coupling."
+    },
+    {
+      "q": "What are 3 alternatives to Singleton?",
+      "a": "Dependency Injection, Factory Pattern, Service Locator."
+    },
+    {
+      "q": "How to test code using Singleton?",
+      "a": "1) Add reset() method for tests. 2) Better: use Dependency Injection - pass instance as parameter instead of accessing globally."
+    },
+    {
+      "q": "When should you NOT use Singleton?",
+      "a": "When you need multiple instances, want easy testing with mocks, building a library, or following DI principles."
+    },
+    {
+      "q": "What is a common Singleton anti-pattern?",
+      "a": "Overusing Singleton - making everything a singleton when you don't truly need a single instance."
+    },
+    {
+      "q": "What happens if constructor is not private in Singleton?",
+      "a": "Anyone can create new instances using 'new', breaking the pattern's guarantee of single instance."
+    },
+    {
+      "q": "What is the serialization problem with Singleton in Java?",
+      "a": "Serialization can create multiple instances. Fix with readResolve() method returning existing instance."
+    }
+  ]
+}
+
