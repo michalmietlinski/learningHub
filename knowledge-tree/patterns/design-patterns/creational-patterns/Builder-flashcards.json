@@ -1,0 +1,63 @@
+{
+  "topic": "Builder Pattern",
+  "source": "lessons-of-the-day/2025-12-16-builder-pattern.md",
+  "flashcards": [
+    {
+      "q": "What is the Builder pattern?",
+      "a": "A creational pattern that separates the construction of a complex object from its representation, allowing the same construction process to create different representations."
+    },
+    {
+      "q": "What core problem does Builder solve?",
+      "a": "It eliminates telescoping constructors and unreadable object creation with many parameters by providing a readable, step-by-step construction process."
+    },
+    {
+      "q": "What are the four main participants in the Builder pattern?",
+      "a": "1) Builder (interface), 2) ConcreteBuilder, 3) Director (optional), 4) Product."
+    },
+    {
+      "q": "How does Builder differ from Factory Method?",
+      "a": "Factory Method decides WHICH object to create, usually with simple construction. Builder focuses on HOW to construct complex objects step-by-step."
+    },
+    {
+      "q": "How does Builder differ from Abstract Factory?",
+      "a": "Abstract Factory creates FAMILIES of related products. Builder creates a SINGLE complex product through a sequence of steps."
+    },
+    {
+      "q": "When should you use the Builder pattern?",
+      "a": "When objects are complex, have many optional parameters, or when you want immutable objects with readable, fluent construction."
+    },
+    {
+      "q": "When should you NOT use the Builder pattern?",
+      "a": "When object creation is simple, with few parameters, and a normal constructor or simple factory is enough."
+    },
+    {
+      "q": "What is a Fluent Builder?",
+      "a": "A builder where each method returns 'this', enabling chained calls like builder.withName('Alice').withAge(30)."
+    },
+    {
+      "q": "What is a Step Builder?",
+      "a": "A builder variation that guides the order of method calls via distinct step interfaces, enforcing required fields and valid construction order."
+    },
+    {
+      "q": "Why is Builder a good fit for immutable objects?",
+      "a": "Because all configuration happens in the builder, and the Product can be created with all fields set in the constructor without exposing setters."
+    },
+    {
+      "q": "Name 3 common real-world uses for Builder.",
+      "a": "1) HTTP request configuration, 2) Test data builders for unit tests, 3) UI component configuration (dialogs, forms)."
+    },
+    {
+      "q": "What is the main disadvantage of the Builder pattern?",
+      "a": "It introduces extra boilerplate (builder classes/interfaces) and can be overkill for simple objects."
+    },
+    {
+      "q": "How does Builder help with test code?",
+      "a": "Test data builders make test setup readable and reusable, hiding object creation details while allowing easy customization per test."
+    },
+    {
+      "q": "How can Director be used in Builder?",
+      "a": "The Director encapsulates standardized construction sequences, calling builder steps in a specific order to create predefined configurations."
+    }
+  ]
+}
+
