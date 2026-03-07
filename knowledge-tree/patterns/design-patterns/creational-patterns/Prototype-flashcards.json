@@ -1,0 +1,66 @@
+{
+  "topic": "Prototype Pattern",
+  "source": "lessons-of-the-day/2025-12-16-prototype-pattern.md",
+  "flashcards": [
+    {
+      "q": "What is the Prototype pattern?",
+      "a": "A creational pattern that creates new objects by copying an existing object (the prototype) instead of constructing from scratch."
+    },
+    {
+      "q": "What core problem does Prototype solve?",
+      "a": "It avoids expensive or complex construction when a copy of an existing object is sufficient, and lets you add product types at runtime by registering prototypes."
+    },
+    {
+      "q": "What are the main participants in the Prototype pattern?",
+      "a": "1) Prototype (interface with clone()), 2) ConcretePrototype (implements clone()), 3) Client (creates objects by cloning a prototype)."
+    },
+    {
+      "q": "How does Prototype differ from Factory Method?",
+      "a": "Factory Method creates objects by calling constructors or factory methods. Prototype creates objects by cloning an existing prototype."
+    },
+    {
+      "q": "How does Prototype differ from Builder?",
+      "a": "Builder constructs an object step-by-step. Prototype creates a copy in one shot by cloning an existing object."
+    },
+    {
+      "q": "What is a shallow copy?",
+      "a": "Copies the object and its direct fields; nested objects are shared (same references). Faster but mutating nested state affects both original and clone."
+    },
+    {
+      "q": "What is a deep copy?",
+      "a": "Recursively copies all nested objects so the clone is fully independent. Slower and more allocation, but no shared mutable state."
+    },
+    {
+      "q": "When should you use Prototype?",
+      "a": "When construction is more expensive than copying, when you want to add product types at runtime, or when you need copies with small variations."
+    },
+    {
+      "q": "When should you NOT use Prototype?",
+      "a": "When objects are simple and cheap to construct, when identity matters (single canonical instance), or when deep clone is impractical (e.g. circular refs)."
+    },
+    {
+      "q": "What is a registry of prototypes?",
+      "a": "A map/store of named prototypes; the client looks up a prototype by key and then clones it to create new instances—add new types at runtime by registering new prototypes."
+    },
+    {
+      "q": "What risk does shallow copy introduce?",
+      "a": "Mutating a nested object affects both the original and the clone, since they share the same references for nested data."
+    },
+    {
+      "q": "Name 3 common real-world uses for Prototype.",
+      "a": "1) Avoiding costly construction (e.g. object from DB), 2) Undo/redo or snapshots, 3) Duplicating game entities or document nodes."
+    },
+    {
+      "q": "What is a main disadvantage of the Prototype pattern?",
+      "a": "Implementing clone correctly can be tricky: deep clone with circular references, and deciding shallow vs deep semantics."
+    },
+    {
+      "q": "How can Prototype be combined with Abstract Factory?",
+      "a": "The factory can store or return a prototype for each product in a family; clients clone the prototype instead of the factory constructing from scratch."
+    },
+    {
+      "q": "Why might cloning be better than construction in some cases?",
+      "a": "When the object was expensive to create (e.g. loaded from DB, heavy computation), copying its state can be cheaper than rebuilding it from scratch."
+    }
+  ]
+}
