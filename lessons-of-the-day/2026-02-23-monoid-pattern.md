@@ -142,9 +142,9 @@ combine(combine(a, b), c) === combine(a, combine(b, c))
 
 The laws ensure that:
 - ✅ Combining values is predictable
-- ✅ You can combine values in any order
+- ✅ The order of **grouping** doesn't affect the result (associativity)—e.g. (a<>b)<>c = a<>(b<>c). For arrays/strings, the **sequence** of chunks still matters (chunk1 <> chunk2 ≠ chunk2 <> chunk1).
 - ✅ The identity element works correctly
-- ✅ You can safely parallelize operations
+- ✅ You can safely parallelize by splitting work and combining partial results in any grouping
 - ✅ Folding/reducing works correctly
 
 ---
@@ -821,7 +821,9 @@ console.log(combined.toArray()); // [1, 2, 3, 4, 5, 6]
 
 ```javascript
 // Monoids enable safe parallel processing
-// Because of associativity, we can combine results in any order
+// Associativity means (a <> b) <> c = a <> (b <> c): we can combine partial results
+// in any grouping (parenthesization). The ORDER of chunks still matters for
+// array/string monoids—chunk1 <> chunk2 is not the same as chunk2 <> chunk1.
 
 // Sequential processing
 function processSequential(data, monoidClass) {

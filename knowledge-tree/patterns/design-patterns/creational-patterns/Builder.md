@@ -119,10 +119,10 @@ Product
 ## 📚 References
 
 ### Lessons of the Day
-- **[2025-12-16 - Builder Pattern](../../../lessons-of-the-day/2025-12-16-builder-pattern.md)** – Full deep-dive with implementation examples, comparisons to telescoping constructors, and fluent/step builder variations
+- **[2025-12-16 - Builder Pattern](../../../../lessons-of-the-day/2025-12-16-builder-pattern.md)** – Full deep-dive with implementation examples, comparisons to telescoping constructors, and fluent/step builder variations
 
 ### Related Lessons
-- [2025-12-14 - Factory Method Pattern](../../../lessons-of-the-day/2025-12-14-factory-method-pattern.md)
-- [2025-12-15 - Abstract Factory Pattern](../../../lessons-of-the-day/2025-12-15-abstract-factory-pattern.md)
-- [2025-12-16 - Prototype Pattern](../../../lessons-of-the-day/2025-12-16-prototype-pattern.md)
+- [2025-12-14 - Factory Method Pattern](../../../../lessons-of-the-day/2025-12-14-factory-method-pattern.md)
+- [2025-12-15 - Abstract Factory Pattern](../../../../lessons-of-the-day/2025-12-15-abstract-factory-pattern.md)
+- [2025-12-16 - Prototype Pattern](../../../../lessons-of-the-day/2025-12-16-prototype-pattern.md)
 

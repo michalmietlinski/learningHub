@@ -30,17 +30,11 @@ Programming Patterns & Architectures
 │   │   │   ├── Implementation
 │   │   │   └── Fluent Interface
 │   │   │
-│   │   ├── Prototype
-│   │   │   ├── Definition
-│   │   │   ├── Use Cases
-│   │   │   ├── Implementation
-│   │   │   └── Deep vs Shallow Copy
-│   │   │
-│   │   └── Dependency Injection
+│   │   └── Prototype
 │   │       ├── Definition
 │   │       ├── Use Cases
 │   │       ├── Implementation
-│   │       └── IoC Containers
+│   │       └── Deep vs Shallow Copy
 │   │
 │   ├── Structural Patterns
 │   │   ├── Adapter
@@ -151,6 +145,19 @@ Programming Patterns & Architectures
 │           ├── Use Cases
 │           ├── Implementation
 │           └── DSL Creation
+│
+├── Principles & Techniques
+│   ├── Dependency Injection
+│   │   ├── Definition
+│   │   ├── Use Cases
+│   │   ├── Implementation
+│   │   └── IoC Containers
+│   │
+│   └── Object Pool
+│       ├── Definition
+│       ├── Use Cases
+│       ├── Implementation
+│       └── Resource Management
 │
 ├── Architectural Patterns
 │   │
