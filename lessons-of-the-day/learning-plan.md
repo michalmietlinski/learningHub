@@ -212,6 +212,8 @@ All core EIP from *Enterprise Integration Patterns* (Hohpe & Woolf) are covered:
 
 **Supporting:** Load Balancing (2026-03-02), Circuit Breaker (2026-02-11), Retry, Bulkhead, Timeout, Fallback, Health Check.
 
+**Summary lesson:** [EIP Taxonomy Summary](2026-03-12-eip-taxonomy-summary.md) (2026-03-12) – overview of all EIP with brief description per pattern, no code; use with full lessons for detail.
+
 ---
 
 ### 11. Enterprise Application Patterns (3/15) - PARTIAL
