@@ -1,0 +1,21 @@
+{
+  "topic": "Iterator Pattern",
+  "source": "lessons-of-the-day/2025-12-31-iterator-pattern.md",
+  "flashcards": [
+    {"q": "What is the Iterator pattern?", "a": "A behavioral pattern that provides a way to access the elements of a collection sequentially without exposing the collection's underlying representation."},
+    {"q": "What are the four participants in the Iterator pattern?", "a": "1) Aggregate (createIterator), 2) ConcreteAggregate (holds data, creates iterator), 3) Iterator (next, hasNext, current), 4) ConcreteIterator (traversal logic)."},
+    {"q": "What is external iteration?", "a": "The client controls the loop by calling next() and hasNext(); classic Iterator pattern."},
+    {"q": "What is internal iteration?", "a": "The collection controls the loop; client passes a callback (e.g. forEach(item => ...)); client doesn't call next()."},
+    {"q": "When should you use the Iterator pattern?", "a": "When you need to traverse a collection without exposing its structure, want multiple independent traversals, or have non-trivial structures (trees, graphs)."},
+    {"q": "How does Iterator support multiple traversals?", "a": "Each call to createIterator() returns a new iterator with its own position; several loops can run over the same collection independently."},
+    {"q": "Name 3 common uses for Iterator.", "a": "Collections (list, set, map), trees/graphs (pre-order, BFS, DFS), lazy sequences/generators, pagination."},
+    {"q": "How does Iterator relate to Composite?", "a": "Composite trees are often traversed with iterators (e.g. depth-first or breadth-first iterator) so clients don't walk the tree manually."},
+    {"q": "What is the Cursor pattern?", "a": "Another name for the Iterator pattern (cursor = current position in the collection)."},
+    {"q": "Why might modification during iteration be forbidden?", "a": "To keep behavior predictable and avoid subtle bugs; many implementations throw or behave undefined if the collection is modified while iterating."},
+    {"q": "What does createIterator() return?", "a": "A new Iterator (or ConcreteIterator) over that aggregate, so the client can traverse without touching the aggregate's internals."},
+    {"q": "How can iterators be lazy?", "a": "Next element is computed only when next() is called (e.g. generators, lazy streams, filtered/mapped views), instead of building a full list upfront."},
+    {"q": "How does Iterator differ from Visitor?", "a": "Iterator only provides traversal (next, current). Visitor adds operations over a structure; you can combine them (iterate and visit each element)."},
+    {"q": "When is Iterator overkill?", "a": "When the collection is a simple array and you only need one direct loop; language's built-in for-of or forEach may be enough."},
+    {"q": "What is a common iterator interface?", "a": "next() (advance and return current or { value, done }), hasNext() or isDone(), and current() or currentItem(); many languages standardize this (e.g. Iterable protocol)."}
+  ]
+}
