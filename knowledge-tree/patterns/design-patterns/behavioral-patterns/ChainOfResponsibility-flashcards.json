@@ -1,0 +1,21 @@
+{
+  "topic": "Chain of Responsibility Pattern",
+  "source": "lessons-of-the-day/2025-12-30-chain-of-responsibility-pattern.md",
+  "flashcards": [
+    {"q": "What is the Chain of Responsibility pattern?", "a": "A behavioral pattern that passes a request along a chain of handlers; each handler either processes the request or forwards it to the next."},
+    {"q": "What are the three participants in the Chain of Responsibility pattern?", "a": "1) Handler (abstract: setNext, handle), 2) ConcreteHandler (canHandle, process, or forward), 3) Client (sends request to first handler)."},
+    {"q": "How does Chain of Responsibility decouple sender and receiver?", "a": "The sender only sends to the first handler; it doesn't know which handler (if any) will process the request."},
+    {"q": "When should you use the Chain of Responsibility pattern?", "a": "When multiple objects can handle a request and you don't want the sender to know which, or when building a pipeline (middleware, validation, logging)."},
+    {"q": "How does Chain of Responsibility differ from Decorator?", "a": "Decorator wraps one object and always forwards. Chain handlers may stop (not forward); chain is a linked list of handlers, not a wrapper stack."},
+    {"q": "What is a common risk if no handler in the chain handles the request?", "a": "The request falls through with no processing; use a default/final handler at the end so every request is handled."},
+    {"q": "Name 3 common uses for Chain of Responsibility.", "a": "Middleware (auth, logging, validation), event handling (pass until handled), support escalation (level 1 → 2 → 3)."},
+    {"q": "What does setNext(handler) return?", "a": "Often the handler that was set (or the next handler) to allow fluent chain building: h1.setNext(h2).setNext(h3)."},
+    {"q": "What is the difference between 'first handler wins' and 'all handlers run'?", "a": "First wins: handler processes and stops. All run: each handler does something and passes on (e.g. logging pipeline)."},
+    {"q": "How does Chain of Responsibility relate to middleware?", "a": "Middleware stacks (e.g. in web frameworks) are often implemented as a chain of responsibility: each middleware can respond or call next()."},
+    {"q": "Why is handler order important?", "a": "Order often determines behavior (e.g. auth before business logic, logging first); document or make order explicit in configuration."},
+    {"q": "When is Chain of Responsibility overkill?", "a": "When exactly one handler should process each request and you know which one; direct call is simpler."},
+    {"q": "What does each ConcreteHandler do in handle()?", "a": "It checks if it can handle the request (canHandle); if yes, processes and returns; if no, forwards to next.handle(request)."},
+    {"q": "How can the chain be built?", "a": "At construction (e.g. new Handler1().setNext(new Handler2())) or at runtime from config; client only needs reference to the first handler."},
+    {"q": "What is another name for Chain of Responsibility?", "a": "Chain of Command pattern."}
+  ]
+}
