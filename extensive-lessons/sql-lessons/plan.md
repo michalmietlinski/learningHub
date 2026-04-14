@@ -8,7 +8,7 @@ This plan breaks down comprehensive SQL learning into 60 focused lessons. Each l
 - **Core SQL (Lessons 1-50):** Beginner to intermediate topics, 2-15 minutes each
 - **Advanced Topics (Lessons 51-60):** Production-level database concepts, 10-20 minutes each
 
-**Progress:** 5/60 lessons completed (8%)
+**Progress:** 9/60 lessons completed (~15%)
 
 ---
 
@@ -1343,11 +1343,11 @@ extensive-lessons/
     ├── 03-tables-and-data-types.md ✅
     ├── 03a-sqlite-vs-postgresql-data-types.md ✅ (Supplementary)
     ├── 04-creating-tables.md ✅
-    ├── 05-select-retrieving-data.md
-    ├── 06-where-filtering-data.md
-    ├── 07-order-by-and-limit.md
-    ├── 08-insert-adding-data.md
-    ├── 09-update-modifying-data.md
+    ├── 05-select-retrieving-data.md ✅
+    ├── 06-where-filtering-data.md ✅
+    ├── 07-order-by-and-limit.md ✅
+    ├── 08-insert-adding-data.md ✅
+    ├── 09-update-modifying-data.md ✅
     ├── 10-delete-removing-data.md
     │
     │   # Functions (Lessons 11-13)
@@ -1470,11 +1470,11 @@ When creating each lesson, follow these guidelines:
 - [x] Lesson 3: Understanding Tables and Data Types
 - [x] Lesson 3a: SQLite vs PostgreSQL Data Types Comparison (Supplementary)
 - [x] Lesson 4: Creating Your First Table
-- [ ] Lesson 5: SELECT - Retrieving Data
-- [ ] Lesson 6: WHERE - Filtering Data
-- [ ] Lesson 7: ORDER BY and LIMIT
-- [ ] Lesson 8: INSERT - Adding Data
-- [ ] Lesson 9: UPDATE - Modifying Data
+- [x] Lesson 5: SELECT - Retrieving Data
+- [x] Lesson 6: WHERE - Filtering Data
+- [x] Lesson 7: ORDER BY and LIMIT
+- [x] Lesson 8: INSERT - Adding Data
+- [x] Lesson 9: UPDATE - Modifying Data
 - [ ] Lesson 10: DELETE - Removing Data
 - [ ] Lesson 11: String Functions
 - [ ] Lesson 12: Numeric Functions
@@ -1638,6 +1638,6 @@ When creating each lesson, follow these guidelines:
 
 ---
 
-*Last Updated: 2026-02-03*
-*Status: In Progress - 5 lessons completed, 55 remaining*
+*Last Updated: 2026-04-11*
+*Status: In Progress - 9 lessons completed, 51 remaining*
 
